@@ -1,5 +1,5 @@
 "use client";
-import { useLanguage } from "@/contexts/LanguageContext";
+import Image from "next/image";
 
 type Props = {
   nome: string;
@@ -9,9 +9,7 @@ type Props = {
 };
 
 export default function MenuCard({ nome, descricao, preco, imagemUrl }: Props) {
-  const { translations } = useLanguage();
   const hasDescricao = Boolean(descricao?.trim());
-  const hasImagem = Boolean(imagemUrl);
   const hasPreco = typeof preco === "number";
   const floatPreco = hasDescricao && hasPreco;
 
@@ -51,12 +49,15 @@ export default function MenuCard({ nome, descricao, preco, imagemUrl }: Props) {
             hasDescricao ? "mx-auto max-w-[420px]" : ""
           }`}
         >
-          <img
+          <Image
             src={imagemUrl}
             alt={nome}
+            width={960}
+            height={400}
             className={`h-44 w-full object-cover transition duration-500 group-hover:scale-105 ${
               hasDescricao ? "object-center" : ""
             }`}
+            sizes="(min-width: 768px) 480px, 100vw"
           />
         </div>
       )}

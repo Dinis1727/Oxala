@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { useState } from "react";
 import clsx from "clsx";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -19,10 +20,13 @@ export default function Header() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#ddb57b]/70 bg-gradient-to-b from-[#fff6e5]/90 via-[#f1cf9c]/88 to-[#d79d52]/82 shadow-[0_12px_40px_rgba(158,104,39,0.35)] backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 container-px">
         <Link href="/" className="flex items-center gap-3 transition hover:opacity-90">
-          <img
+          <Image
             src="/oxala-logo.png"
             alt="Oxalá"
+            width={40}
+            height={40}
             className="h-10 w-10 rounded-full border-2 border-brand-gold/80 object-cover shadow-soft"
+            priority
           />
           <div className="flex flex-col leading-tight">
             <span className="h-display text-xl tracking-wide text-brand-gold">Restaurante Oxalá</span>

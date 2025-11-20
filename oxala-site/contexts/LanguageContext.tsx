@@ -28,7 +28,21 @@ type LanguageProviderProps = {
 
 export function LanguageProvider({ children, initialLanguage = defaultLanguage }: LanguageProviderProps) {
   const router = useRouter();
-  const [language, setLanguageState] = useState<LanguageCode>(initialLanguage);
+  const getInitialLanguage = useCallback(
+    () => {
+      if (typeof window === "undefined") {
+        return initialLanguage;
+      }
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored && isLanguageCode(stored)) {
+        return stored;
+      }
+      return initialLanguage;
+    },
+    [initialLanguage]
+  );
+
+  const [language, setLanguageState] = useState<LanguageCode>(getInitialLanguage);
 
   const persistLanguage = useCallback((lang: LanguageCode) => {
     if (typeof window === "undefined") {
@@ -42,27 +56,18 @@ export function LanguageProvider({ children, initialLanguage = defaultLanguage }
     if (typeof window === "undefined") {
       return;
     }
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored && isLanguageCode(stored) && stored !== language) {
-      setLanguageState(stored);
-      persistLanguage(stored);
-      router.refresh();
-    } else if (!stored) {
-      persistLanguage(language);
-    }
-  }, [language, persistLanguage, router]);
+    persistLanguage(language);
+  }, [language, persistLanguage]);
 
   const setLanguage = useCallback(
     (lang: LanguageCode) => {
       if (language === lang) {
-        persistLanguage(lang);
         return;
       }
       setLanguageState(lang);
-      persistLanguage(lang);
       router.refresh();
     },
-    [language, persistLanguage, router]
+    [language, router]
   );
 
   const value = useMemo(
@@ -72,7 +77,7 @@ export function LanguageProvider({ children, initialLanguage = defaultLanguage }
       translations: translations[language],
       options: languageOptions,
     }),
-    [language]
+    [language, setLanguage]
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

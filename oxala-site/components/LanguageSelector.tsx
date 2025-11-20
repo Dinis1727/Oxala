@@ -1,0 +1,37 @@
+"use client";
+import clsx from "clsx";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+type Props = {
+  direction?: "row" | "column";
+  size?: "sm" | "md";
+};
+
+export default function LanguageSelector({ direction = "row", size = "md" }: Props) {
+  const { language, setLanguage, options } = useLanguage();
+  const isRow = direction === "row";
+  const baseText = size === "sm" ? "text-[0.7rem]" : "text-xs";
+  const getLabel = (optionLabel: string, shortLabel: string) => (isRow ? shortLabel : optionLabel);
+
+  return (
+    <div
+      className={clsx(
+        "rounded-full border border-[#e8c796]/70 bg-white/80 px-3 py-1 font-semibold text-brand-ink/80 shadow-[0_8px_24px_rgba(222,182,117,0.35)] backdrop-blur",
+        isRow ? "flex items-center gap-1" : "flex flex-col gap-1 text-left"
+      )}
+    >
+      {options.map((option, index) => (
+        <div key={option.code} className="flex items-center">
+          <button
+            type="button"
+            onClick={() => setLanguage(option.code)}
+            className={clsx(baseText, "uppercase transition hover:text-brand-gold", option.code === language ? "text-brand-gold" : "text-brand-ink/70")}
+          >
+            {getLabel(option.label, option.shortLabel)}
+          </button>
+          {isRow && index < options.length - 1 && <span className={`${baseText} px-1 text-brand-ink/30`}>/</span>}
+        </div>
+      ))}
+    </div>
+  );
+}

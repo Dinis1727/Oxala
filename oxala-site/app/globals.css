@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* fontes do next/font */
+:root {
+  --font-inter: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-playfair: "Playfair Display", Georgia, serif;
+}
+
+body {
+  font-family: var(--font-inter);
+  color: theme("colors.brand.ink");
+  background:
+    radial-gradient(circle at 12% 18%, rgba(244, 194, 125, 0.4), transparent 55%),
+    radial-gradient(circle at 80% -10%, rgba(255, 230, 195, 0.45), transparent 45%),
+    linear-gradient(160deg, #f3d2a7 0%, #fbe4c0 45%, #f3d8ad 100%);
+  min-height: 100vh;
+}
+.h-display { font-family: var(--font-playfair); }
+
+::selection {
+  background: theme("colors.brand.gold");
+  color: #fff;
+}
+.h-display { font-family: var(--font-playfair); }
+
+/* container responsivo */
+.container-px { @apply px-4 sm:px-6 lg:px-8; }
+.card { @apply bg-white rounded-2xl shadow-soft border border-brand-line/60; }
+
+/* dev only: esconder o botão flutuante das DevTools do Next.js */
+button[data-next-mark] { display: none !important; }
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 rounded-full border border-brand-line/70 px-4 py-2 text-sm font-semibold text-brand-ink/80 transition;
+  @apply hover:border-brand-gold hover:text-brand-ink hover:bg-brand-shell;
+}
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-2 text-sm font-semibold text-brand-night shadow-soft transition;
+  @apply hover:bg-brand-gold/90 hover:-translate-y-0.5;
+}
+
+.btn-outline-light {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/60 px-6 py-2 text-sm font-semibold text-white/85 transition;
+  @apply hover:border-brand-gold hover:text-white hover:bg-white/10 hover:-translate-y-0.5;
+}
+
+.section-title {
+  @apply h-display text-2xl md:text-3xl text-brand-ink tracking-wide;
+}
+
+.chip {
+  @apply inline-flex items-center justify-center rounded-full bg-brand-shell/80 px-3 py-1 text-2xl font-semibold uppercase tracking-widest text-brand-forest/80;
+}

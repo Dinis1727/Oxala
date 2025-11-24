@@ -12,23 +12,37 @@ export default async function Home() {
   const t = translations[language];
 
   return (
-    <section className="relative isolate overflow-hidden rounded-[36px] border border-[#e4c28b]/70 bg-brand-night shadow-[0_30px_80px_rgba(20,15,10,0.35)]">
-      <div
-        className="absolute inset-0 bg-cover bg-center brightness-110 saturate-125"
-        style={{ backgroundImage: "url('/hero-bg.png')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/55 to-black/70" />
-      <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-5xl flex-col items-center justify-end px-6 pb-14 pt-16 text-center sm:px-10 md:px-12">
-        <div className="flex flex-wrap items-center justify-center gap-4">
+    <section className="relative isolate overflow-hidden rounded-[36px] border border-white/8 bg-[#0b0907] shadow-[0_30px_100px_rgba(0,0,0,0.55)]">
+      <div className="relative mx-auto max-w-5xl px-4 pt-6 sm:px-6 md:px-10">
+        <div className="relative overflow-hidden rounded-[32px] shadow-[0_28px_90px_rgba(0,0,0,0.38)]">
+          <div
+            className="aspect-[4/3] w-full bg-cover bg-center brightness-105 saturate-110"
+            style={{ backgroundImage: "url('/hero-bg.png')" }}
+          />
+        </div>
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center justify-center px-6 pb-12 pt-10 text-center sm:px-8 md:max-w-5xl md:px-12 md:pb-16">
+        <div className="space-y-5 md:space-y-6">
+          <p className="text-[0.72rem] uppercase tracking-[0.32em] text-white/55 md:text-xs">Oxalá · Ovar</p>
+          <div className="space-y-4">
+            <h1 className="h-display text-3xl text-[#f0e8d9] sm:text-4xl md:text-5xl">{t.home.heroTitle}</h1>
+            <p className="mx-auto max-w-3xl text-[0.95rem] leading-relaxed text-white/75 sm:text-base md:text-lg">
+              {t.home.heroDescription}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
           <Link
             href="/ementa"
-            className="inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-3.5 text-base font-semibold uppercase tracking-[0.2em] text-brand-night shadow-[0_15px_40px_rgba(222,182,117,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(222,182,117,0.5)]"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#d8b77a] bg-gradient-to-r from-[#d8b77a] via-[#c8a46b] to-[#b89156] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#2b1d0e] shadow-[0_18px_38px_rgba(200,164,107,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(200,164,107,0.45)] md:px-7 md:py-3.5 md:text-base md:tracking-[0.2em]"
           >
             {t.home.ctaMenu}
           </Link>
           <Link
             href="/vinhos"
-            className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-6 py-3.5 text-base font-semibold uppercase tracking-[0.2em] text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-brand-gold/70 hover:bg-brand-gold/10"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#ffffff33] bg-[#12100d]/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-[0_16px_36px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5 hover:border-[#d8b77a] hover:bg-[#1a1611] md:px-7 md:py-3.5 md:text-base md:tracking-[0.2em]"
           >
             {t.home.ctaWines}
           </Link>

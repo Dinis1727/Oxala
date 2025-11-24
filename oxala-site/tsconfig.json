@@ -25,7 +25,7 @@
     },
 
     /* === Deprecation Handling === */
-    "ignoreDeprecations": "6.0",
+    "ignoreDeprecations": "5.0",
 
     /* === Plugins === */
     "plugins": [{ "name": "next" }]

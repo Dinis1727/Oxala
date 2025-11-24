@@ -16,8 +16,8 @@ export default function LanguageSelector({ direction = "row", size = "md" }: Pro
   return (
     <div
       className={clsx(
-        "rounded-full border border-[#e8c796]/70 bg-white/80 px-3 py-1 font-semibold text-brand-ink/80 shadow-[0_8px_24px_rgba(222,182,117,0.35)] backdrop-blur",
-        isRow ? "flex items-center gap-1" : "flex flex-col gap-1 text-left py-3 px-4 rounded-2xl border-brand-line bg-white/90 shadow-[0_12px_30px_rgba(20,15,10,0.08)]"
+        "rounded-full border border-white/15 bg-white/5 px-3 py-1 font-semibold text-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.25)] backdrop-blur",
+        isRow ? "flex items-center gap-1" : "flex flex-col gap-1 text-left py-3 px-4 rounded-2xl border-white/15 bg-white/8 shadow-[0_12px_30px_rgba(0,0,0,0.3)]"
       )}
     >
       {options.map((option, index) => (
@@ -25,11 +25,11 @@ export default function LanguageSelector({ direction = "row", size = "md" }: Pro
           <button
             type="button"
             onClick={() => setLanguage(option.code)}
-            className={clsx(baseText, "uppercase transition hover:text-brand-gold", option.code === language ? "text-brand-gold" : "text-brand-ink/70")}
+            className={clsx(baseText, "uppercase transition hover:text-brand-gold", option.code === language ? "text-brand-gold" : "text-white/70")}
           >
             {getLabel(option.label, option.shortLabel)}
           </button>
-          {isRow && index < options.length - 1 && <span className={`${baseText} px-1 text-brand-ink/30`}>/</span>}
+          {isRow && index < options.length - 1 && <span className={`${baseText} px-1 text-white/30`}>/</span>}
         </div>
       ))}
     </div>

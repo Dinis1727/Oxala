@@ -18,14 +18,14 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#ddb57b]/70 bg-gradient-to-b from-[#fff6e5]/90 via-[#f1cf9c]/88 to-[#d79d52]/82 shadow-[0_12px_40px_rgba(158,104,39,0.35)] backdrop-blur-md">
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 container-px">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0e0b09]/85 shadow-[0_18px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+      <div className="mx-auto flex min-h-[76px] max-w-5xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:max-w-6xl lg:px-8">
         <Link
           href="/"
-          className="group flex items-center gap-3 rounded-full border border-brand-gold/60 bg-gradient-to-r from-white/85 via-[#f6e1c0]/70 to-white/85 px-3 py-1.5 pr-4 shadow-[0_10px_26px_rgba(190,140,60,0.28)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(190,140,60,0.32)]"
+          className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 pr-4 shadow-[0_12px_26px_rgba(0,0,0,0.25)] transition hover:-translate-y-0.5 hover:border-brand-gold/50 hover:bg-white/10"
         >
-          <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/70 p-[3px] shadow-[0_6px_14px_rgba(180,130,50,0.25)]">
-            <div className="absolute inset-0 rounded-full border border-brand-gold/60 blur-[0.5px]" />
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-white/12 to-white/5 p-[3px] shadow-[0_10px_22px_rgba(0,0,0,0.3)] sm:h-11 sm:w-11">
+            <div className="absolute inset-0 rounded-full blur-[0.5px]" />
             <Image
               src="/oxala-logo-wb.png"
               alt="Oxalá"
@@ -36,24 +36,24 @@ export default function Header() {
             />
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="h-display text-lg font-semibold tracking-[0.08em] text-brand-gold transition group-hover:text-brand-ink">
+            <span className="h-display text-base font-semibold tracking-[0.06em] text-brand-gold transition group-hover:text-white sm:text-lg">
               Restaurante Oxalá
             </span>
-            <span className="text-[0.65rem] uppercase tracking-[0.35em] text-brand-ink/50">Ovar · Portugal</span>
+            <span className="text-[0.55rem] uppercase tracking-[0.28em] text-white/50 sm:text-[0.58rem]">Ovar · Portugal</span>
           </div>
         </Link>
 
         {/* desktop */}
-        <nav className="hidden items-center gap-7 text-sm font-semibold text-brand-ink/80 md:ml-auto md:flex">
+        <nav className="hidden flex-wrap items-center gap-5 text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-white/70 md:ml-auto md:flex lg:gap-7 lg:text-[0.82rem]">
           {nav.map((i) => (
             <Link
               key={i.href}
               href={i.href}
               className={clsx(
-                "relative transition hover:text-brand-gold",
+                "relative pb-1 transition hover:text-brand-gold",
                 pathname === i.href
-                  ? "text-brand-gold after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-brand-gold"
-                  : "text-brand-ink/75"
+                  ? "text-brand-gold after:absolute after:-bottom-[2px] after:left-0 after:h-[1px] after:w-full after:bg-brand-gold"
+                  : "text-white/65"
               )}
             >
               {i.label}
@@ -61,32 +61,32 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:gap-2">
           <div className="hidden md:block">
             <LanguageSelector size="sm" />
           </div>
           {/* mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e0bb83]/80 bg-white/80 text-brand-ink transition md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:border-brand-gold/60 hover:text-brand-gold md:hidden"
             aria-label={translations.header.menuToggle}
           >
             <div className="flex h-5 w-6 flex-col justify-between">
               <span
                 className={clsx(
-                  "block h-0.5 w-full origin-center bg-brand-ink transition-transform duration-300 transform",
+                  "block h-0.5 w-full origin-center bg-current transition-transform duration-300 transform",
                   open ? "translate-y-1.5 rotate-45" : ""
                 )}
               />
               <span
                 className={clsx(
-                  "block h-0.5 w-full bg-brand-ink transition-opacity duration-300",
+                  "block h-0.5 w-full bg-current transition-opacity duration-300",
                   open ? "opacity-0" : "opacity-100"
                 )}
               />
               <span
                 className={clsx(
-                  "block h-0.5 w-full origin-center bg-brand-ink transition-transform duration-300 transform",
+                  "block h-0.5 w-full origin-center bg-current transition-transform duration-300 transform",
                   open ? "-translate-y-1.5 -rotate-45" : ""
                 )}
               />
@@ -97,7 +97,7 @@ export default function Header() {
 
       {/* mobile drawer */}
       {open && (
-        <div className="border-t border-[#edc999]/60 bg-white/95 text-brand-ink shadow-inner md:hidden">
+        <div className="border-t border-white/10 bg-[#0f0c0a]/95 text-white shadow-inner md:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 container-px py-4">
             {nav.map((i) => (
               <Link
@@ -105,10 +105,10 @@ export default function Header() {
                 href={i.href}
                 onClick={() => setOpen(false)}
                 className={clsx(
-                  "rounded-lg px-2 py-2.5 text-sm font-medium transition",
+                  "rounded-lg px-2 py-2.5 text-sm font-medium uppercase tracking-[0.18em] transition",
                   pathname === i.href
-                    ? "bg-brand-gold/20 text-brand-gold"
-                    : "text-brand-ink/80 hover:bg-brand-shell"
+                    ? "bg-brand-gold/15 text-brand-gold"
+                    : "text-white/75 hover:bg-white/5"
                 )}
               >
                 {i.label}

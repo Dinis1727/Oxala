@@ -15,13 +15,13 @@ export default function MenuCard({ nome, descricao, preco, imagemUrl }: Props) {
 
   return (
     <article
-      className={`group relative rounded-3xl bg-white/80 px-5 py-5 shadow-[0_15px_35px_rgba(17,9,2,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(17,9,2,0.12)] ${
+      className={`group relative rounded-3xl border border-brand-line/60 bg-white/85 px-5 py-5 shadow-[0_15px_35px_rgba(17,9,2,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(17,9,2,0.14)] ${
         floatPreco ? "pr-28" : ""
       }`}
     >
       <div className="flex items-center gap-4">
         <div className="flex flex-col gap-1">
-          <h3 className="font-serif text-[1.35rem] font-medium tracking-[0.04em] text-brand-ink md:text-[1.55rem]">
+          <h3 className="h-display text-[1.35rem] font-medium tracking-[0.02em] text-brand-ink md:text-[1.55rem]">
             {nome}
           </h3>
           {hasDescricao && (

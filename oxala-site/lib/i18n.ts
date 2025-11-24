@@ -81,7 +81,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     home: {
       heroTitle: "Restaurante Oxalá",
       heroDescription:
-        "Cozinha atlântica e ria em Ovar, apresentada numa ementa digital elegante e atualizada.",
+        "Seja bem-vindo ao Restaurante Oxalá, onde o sabor do mar encontra a tradição e a elegância à mesa. Convidamo-lo a descobrir a nossa ementa e carta de vinhos.",
       ctaMenu: "Ver ementa",
       ctaWines: "Ver carta de vinhos",
     },

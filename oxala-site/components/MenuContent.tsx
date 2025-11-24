@@ -25,12 +25,12 @@ export default function MenuContent({ categorias }: Props) {
   return (
     <section
       id="ementa"
-      className="rounded-[36px] border border-[#e4c28b]/70 bg-gradient-to-br from-white/95 via-[#fcebd0]/92 to-[#f1cf95]/90 px-5 py-10 shadow-[0_30px_80px_rgba(184,140,78,0.25)] backdrop-blur-sm sm:px-8 md:px-12 md:py-16"
+      className="rounded-[36px] border border-white/12 bg-gradient-to-br from-[#f5f0e7]/95 via-[#f7f2e9]/92 to-[#eee4d3]/90 px-5 py-10 shadow-[0_30px_90px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:px-8 md:px-12 md:py-16"
     >
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-[0.65rem] uppercase tracking-[0.5em] text-brand-smoke">{t.introTag}</p>
-        <h2 className="mt-3 font-serif text-3xl text-brand-ink sm:text-4xl">{t.introTitle}</h2>
-        <p className="mt-4 text-base text-brand-ink/70">{t.introDescription}</p>
+        <h2 className="mt-3 h-display text-3xl text-brand-ink sm:text-4xl">{t.introTitle}</h2>
+        <p className="mt-4 text-base text-brand-ink/75">{t.introDescription}</p>
       </div>
 
       <div className="mt-12 space-y-12 md:space-y-16">
@@ -44,12 +44,12 @@ export default function MenuContent({ categorias }: Props) {
           return (
             <article
               key={categoria._id}
-              className="rounded-[32px] border border-brand-line/70 bg-[#f5ead9]/[0.9] p-6 shadow-[0_20px_50px_rgba(20,15,10,0.08)] md:p-10"
+              className="rounded-[32px] border border-brand-line/60 bg-[#f7f1e6]/90 p-6 shadow-[0_26px_60px_rgba(0,0,0,0.12)] md:p-10"
             >
               <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
                   <p className="text-[0.65rem] uppercase tracking-[0.45em] text-brand-smoke">{t.categoryLabel}</p>
-                  <h3 className="font-serif text-2xl text-brand-ink sm:text-3xl">{categoria.nome}</h3>
+                  <h3 className="h-display text-2xl text-brand-ink sm:text-3xl">{categoria.nome}</h3>
                 </div>
               </header>
 

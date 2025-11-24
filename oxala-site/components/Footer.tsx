@@ -35,27 +35,27 @@ export default function Footer() {
   const t = translations.footer;
 
   return (
-    <footer className="border-t border-[#e2c28a]/70 bg-gradient-to-b from-[#fff3df] via-[#f2cf96] to-[#cc8c3d] text-brand-ink">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 text-sm text-brand-ink/80 sm:grid sm:grid-cols-2 sm:items-start sm:gap-8 lg:grid-cols-[1fr_0.8fr_0.8fr_0.8fr] lg:px-6 xl:px-8">
-        <div className="space-y-3">
+    <footer className="border-t border-white/10 bg-gradient-to-b from-[#0d0b0a] via-[#0f0c0b] to-[#0c0a09] text-white">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-4 py-10 text-sm text-white/70 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1fr_0.8fr_0.8fr_0.8fr] lg:px-6 xl:px-8">
+        <div className="space-y-5">
           <p className="text-xs uppercase tracking-[0.35em] text-brand-gold">{t.tagline}</p>
-          <p className="font-serif text-lg text-brand-night">{t.description}</p>
+          <p className="h-display text-lg text-white/90">{t.description}</p>
         </div>
 
         <div className="space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-ink/60">{t.visitUs}</p>
-          <p>R. Família Colares Pinto 1695</p>
-          <p>3880-163 Ovar</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/50">{t.visitUs}</p>
+          <p className="text-white/80">R. Família Colares Pinto 1695</p>
+          <p className="text-white/80">3880-163 Ovar</p>
         </div>
 
-        <div className="space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-ink/60">{t.reservations}</p>
-          <p>256 591 371</p>
-          <p>962 076 410</p>
+        <div className="space-y-0">
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/50">{t.reservations}</p>
+          <p className="text-white/80">256 591 371</p>
+          <p className="text-white/80">962 076 410</p>
         </div>
 
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-ink/60">{t.socials}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/50">{t.socials}</p>
           <div className="flex w-full max-w-[130px] flex-col gap-1.5 sm:max-w-[120px]">
             {socialLinks.map((social) => (
               <a
@@ -63,7 +63,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-brand-line/60 bg-white/85 px-3 py-1.25 text-[0.85rem] font-semibold text-brand-ink/80 transition hover:border-brand-gold hover:bg-white hover:text-brand-gold sm:text-sm"
+                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.25 text-[0.85rem] font-semibold text-white/85 transition hover:border-brand-gold hover:text-brand-gold sm:text-sm"
               >
                 {social.icon}
                 {social.label}
@@ -73,8 +73,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/60">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 text-xs text-brand-ink/70 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>
             © {new Date().getFullYear()} Restaurante Oxalá. {t.rights}
           </p>

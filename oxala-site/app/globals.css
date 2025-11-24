@@ -4,26 +4,26 @@
 
 /* fontes do next/font */
 :root {
-  --font-inter: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-manrope: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-cormorant: "Cormorant Garamond", "Garamond", "Times New Roman", serif;
 }
 
 body {
-  font-family: var(--font-inter);
+  font-family: var(--font-manrope);
   color: theme("colors.brand.ink");
   background:
-    radial-gradient(circle at 12% 18%, rgba(244, 194, 125, 0.4), transparent 55%),
-    radial-gradient(circle at 80% -10%, rgba(255, 230, 195, 0.45), transparent 45%),
-    linear-gradient(160deg, #f3d2a7 0%, #fbe4c0 45%, #f3d8ad 100%);
+    radial-gradient(circle at 18% 20%, rgba(200, 164, 107, 0.18), transparent 35%),
+    radial-gradient(circle at 82% 8%, rgba(200, 164, 107, 0.14), transparent 32%),
+    linear-gradient(145deg, #0d0a08 0%, #14100c 55%, #0e0b08 100%);
   min-height: 100vh;
 }
-.h-display { font-family: var(--font-playfair); }
+.h-display { font-family: var(--font-cormorant); }
 
 ::selection {
   background: theme("colors.brand.gold");
-  color: #fff;
+  color: #0d0a08;
 }
-.h-display { font-family: var(--font-playfair); }
+.h-display { font-family: var(--font-cormorant); }
 
 /* container responsivo */
 .container-px { @apply px-4 sm:px-6 lg:px-8; }

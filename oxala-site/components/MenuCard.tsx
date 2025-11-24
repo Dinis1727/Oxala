@@ -29,7 +29,7 @@ export default function MenuCard({ nome, descricao, preco, imagemUrl }: Props) {
           )}
         </div>
         {!floatPreco && hasPreco && (
-          <span className="ml-auto inline-flex h-9 min-w-[72px] items-center justify-center rounded-full bg-brand-gold/12 px-3 text-sm font-semibold text-brand-gold shadow-inner shadow-brand-gold/20">
+          <span className="ml-auto inline-flex h-9 min-w-[72px] items-center justify-center rounded-full bg-brand-gold/12 px-3 text-sm font-semibold text-brand-gold shadow-inner shadow-brand-gold/20 whitespace-nowrap">
             {preco.toFixed(2)} €
           </span>
         )}
@@ -37,7 +37,7 @@ export default function MenuCard({ nome, descricao, preco, imagemUrl }: Props) {
 
       {floatPreco && (
         <div className="absolute inset-y-0 right-5 flex items-center">
-          <span className="inline-flex h-9 min-w-[72px] items-center justify-center rounded-full bg-brand-gold/12 px-3 text-sm font-semibold text-brand-gold shadow-inner shadow-brand-gold/20">
+          <span className="inline-flex h-9 min-w-[72px] items-center justify-center rounded-full bg-brand-gold/12 px-3 text-sm font-semibold text-brand-gold shadow-inner shadow-brand-gold/20 whitespace-nowrap">
             {preco!.toFixed(2)} €
           </span>
         </div>

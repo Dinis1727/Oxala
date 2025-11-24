@@ -64,10 +64,11 @@ export function LanguageProvider({ children, initialLanguage = defaultLanguage }
       if (language === lang) {
         return;
       }
+      persistLanguage(lang);
       setLanguageState(lang);
       router.refresh();
     },
-    [language, router]
+    [language, router, persistLanguage]
   );
 
   const value = useMemo(

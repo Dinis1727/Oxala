@@ -17,7 +17,7 @@ export default function LanguageSelector({ direction = "row", size = "md" }: Pro
     <div
       className={clsx(
         "rounded-full border border-[#e8c796]/70 bg-white/80 px-3 py-1 font-semibold text-brand-ink/80 shadow-[0_8px_24px_rgba(222,182,117,0.35)] backdrop-blur",
-        isRow ? "flex items-center gap-1" : "flex flex-col gap-1 text-left"
+        isRow ? "flex items-center gap-1" : "flex flex-col gap-1 text-left py-3 px-4 rounded-2xl border-brand-line bg-white/90 shadow-[0_12px_30px_rgba(20,15,10,0.08)]"
       )}
     >
       {options.map((option, index) => (

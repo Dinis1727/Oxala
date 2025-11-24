@@ -1,7 +1,6 @@
 "use client";
 import { useMemo } from "react";
 import MenuCard from "@/components/MenuCard";
-import Hero from "@/components/Hero";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Categoria } from "@/types/menu";
 
@@ -28,10 +27,6 @@ export default function MenuContent({ categorias }: Props) {
       id="ementa"
       className="rounded-[36px] border border-[#e4c28b]/70 bg-gradient-to-br from-white/95 via-[#fcebd0]/92 to-[#f1cf95]/90 px-5 py-10 shadow-[0_30px_80px_rgba(184,140,78,0.25)] backdrop-blur-sm sm:px-8 md:px-12 md:py-16"
     >
-      <div className="mx-auto mb-12 max-w-4xl">
-        <Hero />
-      </div>
-
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-[0.65rem] uppercase tracking-[0.5em] text-brand-smoke">{t.introTag}</p>
         <h2 className="mt-3 font-serif text-3xl text-brand-ink sm:text-4xl">{t.introTitle}</h2>

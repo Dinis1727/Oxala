@@ -12,24 +12,34 @@ export default function Header() {
   const pathname = usePathname();
   const { translations } = useLanguage();
   const nav = [
-    { href: "/", label: translations.nav.menu },
+    { href: "/", label: translations.nav.home },
+    { href: "/ementa", label: translations.nav.menu },
     { href: "/vinhos", label: translations.nav.wines },
   ];
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-[#ddb57b]/70 bg-gradient-to-b from-[#fff6e5]/90 via-[#f1cf9c]/88 to-[#d79d52]/82 shadow-[0_12px_40px_rgba(158,104,39,0.35)] backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 container-px">
-        <Link href="/" className="flex items-center gap-3 transition hover:opacity-90">
-          <Image
-            src="/oxala-logo.png"
-            alt="Oxalá"
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-full border-2 border-brand-gold/80 object-cover shadow-soft"
-            priority
-          />
+        <Link
+          href="/"
+          className="group flex items-center gap-3 rounded-full border border-brand-gold/60 bg-gradient-to-r from-white/85 via-[#f6e1c0]/70 to-white/85 px-3 py-1.5 pr-4 shadow-[0_10px_26px_rgba(190,140,60,0.28)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(190,140,60,0.32)]"
+        >
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/70 p-[3px] shadow-[0_6px_14px_rgba(180,130,50,0.25)]">
+            <div className="absolute inset-0 rounded-full border border-brand-gold/60 blur-[0.5px]" />
+            <Image
+              src="/oxala-logo-wb.png"
+              alt="Oxalá"
+              width={40}
+              height={40}
+              className="h-full w-full rounded-full object-cover"
+              priority
+            />
+          </div>
           <div className="flex flex-col leading-tight">
-            <span className="h-display text-xl tracking-wide text-brand-gold">Restaurante Oxalá</span>
+            <span className="h-display text-lg font-semibold tracking-[0.08em] text-brand-gold transition group-hover:text-brand-ink">
+              Restaurante Oxalá
+            </span>
+            <span className="text-[0.65rem] uppercase tracking-[0.35em] text-brand-ink/50">Ovar · Portugal</span>
           </div>
         </Link>
 

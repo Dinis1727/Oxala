@@ -17,6 +17,7 @@ export function isLanguageCode(value?: string | null): value is LanguageCode {
 
 type TranslationShape = {
   nav: {
+    home: string;
     menu: string;
     wines: string;
   };
@@ -33,6 +34,12 @@ type TranslationShape = {
     taxLine1: string;
     taxLine2: string;
     taxLaw: string;
+  };
+  home: {
+    heroTitle: string;
+    heroDescription: string;
+    ctaMenu: string;
+    ctaWines: string;
   };
   footer: {
     tagline: string;
@@ -51,6 +58,7 @@ type TranslationShape = {
 export const translations: Record<LanguageCode, TranslationShape> = {
   pt: {
     nav: {
+      home: "Início",
       menu: "Ementa",
       wines: "Carta de Vinhos",
     },
@@ -70,6 +78,13 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         "Nenhum prato, produto alimentar ou bebida, incluindo o couvert, pode ser cobrado se não for solicitado pelo cliente ou por este for inutilizado.",
       taxLaw: "Decreto-Lei 10/2015",
     },
+    home: {
+      heroTitle: "Restaurante Oxalá",
+      heroDescription:
+        "Cozinha atlântica e ria em Ovar, apresentada numa ementa digital elegante e atualizada.",
+      ctaMenu: "Ver ementa",
+      ctaWines: "Ver carta de vinhos",
+    },
     footer: {
       tagline: "Restaurante Oxalá",
       description: "A melhor experiência gastronómica em Ovar.",
@@ -86,6 +101,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
   },
   en: {
     nav: {
+      home: "Home",
       menu: "Menu",
       wines: "Wine List",
     },
@@ -105,6 +121,13 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         "No dish, food product or beverage, including couvert, can be charged if not requested by the guest or if unusable.",
       taxLaw: "Decree-Law 10/2015",
     },
+    home: {
+      heroTitle: "Oxalá Restaurant",
+      heroDescription:
+        "Atlantic-inspired cuisine in Ovar, presented in an elegant, always up-to-date digital menu.",
+      ctaMenu: "View menu",
+      ctaWines: "View wine list",
+    },
     footer: {
       tagline: "Oxalá Restaurant",
       description: "The finest gastronomic experience in Ovar.",
@@ -120,6 +143,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
   },
   fr: {
     nav: {
+      home: "Accueil",
       menu: "Carte",
       wines: "Carte des vins",
     },
@@ -139,6 +163,13 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         "Aucun plat, produit alimentaire ou boisson, y compris le couvert, ne peut être facturé s’il n’a pas été demandé par le client ou s’il est inutilisable.",
       taxLaw: "Décret-loi 10/2015",
     },
+    home: {
+      heroTitle: "Restaurant Oxalá",
+      heroDescription:
+        "Cuisine inspirée de l’Atlantique à Ovar, présentée dans une carte digitale élégante et toujours à jour.",
+      ctaMenu: "Voir la carte",
+      ctaWines: "Voir la carte des vins",
+    },
     footer: {
       tagline: "Restaurant Oxalá",
       description: "La meilleure expérience gastronomique à Ovar.",
@@ -155,6 +186,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
   },
   es: {
     nav: {
+      home: "Inicio",
       menu: "Menú",
       wines: "Carta de vinos",
     },
@@ -173,6 +205,13 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       taxLine2:
         "Ningún plato, producto alimenticio o bebida, incluido el couvert, puede cobrarse si no fue solicitado por el cliente o si se inutiliza.",
       taxLaw: "Decreto-ley 10/2015",
+    },
+    home: {
+      heroTitle: "Restaurante Oxalá",
+      heroDescription:
+        "Cocina inspirada en el Atlántico en Ovar, presentada en un menú digital elegante y siempre actualizado.",
+      ctaMenu: "Ver menú",
+      ctaWines: "Ver carta de vinos",
     },
     footer: {
       tagline: "Restaurante Oxalá",

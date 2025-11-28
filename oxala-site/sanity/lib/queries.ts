@@ -12,3 +12,22 @@ export const categoriasComPratos = `
   }
 }
 `;
+
+export const vinhosPorIdioma = `
+*[
+  _type == "vinho" &&
+  (
+    language == $language || !defined(language)
+  )
+] | order(regiao asc, nome asc) {
+  _id,
+  nome,
+  tipo,
+  regiao,
+  ano,
+  preco,
+  volumeMl,
+  teorAlcoolico,
+  "imagemUrl": imagem.asset->url
+}
+`;

@@ -52,6 +52,23 @@ type TranslationShape = {
   vinhos: {
     title: string;
     description: string;
+    bottleSizeLabel: string;
+    alcoholContentLabel: string;
+    yearLabel: string;
+    emptyState: string;
+    regionLabel: string;
+    typeLabel: string;
+    priceLabel: string;
+    closeLabel: string;
+    searchPlaceholder: string;
+    searchLabel: string;
+    filters: {
+      title: string;
+      all: string;
+      region: string;
+      type: string;
+    };
+    bottleSizes: Array<{ value: number; label: string }>;
   };
 };
 
@@ -97,6 +114,37 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       title: "Carta de Vinhos",
       description:
         "A seleção de vinhos do Oxalá diretamente da maior garrafeira nacional para complementar a sua refeição.",
+      bottleSizeLabel: "Tamanho da garrafa",
+      alcoholContentLabel: "Teor alcoólico (% vol.)",
+      yearLabel: "Ano (colheita)",
+      emptyState: "Em breve partilharemos a nossa carta de vinhos.",
+      regionLabel: "Região",
+      typeLabel: "Tipo",
+      priceLabel: "Preço",
+      closeLabel: "Fechar",
+      searchPlaceholder: "Procurar vinho, região, ano...",
+      searchLabel: "Pesquisar",
+      filters: {
+        title: "Filtrar",
+        all: "Todas",
+        region: "Região",
+        type: "Tipo",
+      },
+      bottleSizes: [
+        { value: 187.5, label: "Piccolo: 187,5 ml" },
+        { value: 375, label: "Meia garrafa: 375 ml" },
+        { value: 750, label: "Garrafa padrão: 750 ml" },
+        { value: 1500, label: "Magnum: 1,5 L (1500 ml)" },
+        { value: 3000, label: "Jeroboão: 3 L" },
+        { value: 4500, label: "Roboão: 4,5 L" },
+        { value: 6000, label: "Matusalém: 6 L" },
+        { value: 9000, label: "Salmanazar: 9 L" },
+        { value: 12000, label: "Baltazar: 12 L" },
+        { value: 15000, label: "Nabucodonosor: 15 L" },
+        { value: 18000, label: "Salomão: 18 L" },
+        { value: 27000, label: "Golias: 27 L" },
+        { value: 30000, label: "Melchizedec: 30 L" },
+      ],
     },
   },
   en: {
@@ -139,6 +187,37 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     vinhos: {
       title: "Wine List",
       description: "Oxalá’s wine selection curated from the largest national cellar to pair with your meal.",
+      bottleSizeLabel: "Bottle size",
+      alcoholContentLabel: "Alcohol by volume (% ABV)",
+      yearLabel: "Vintage year",
+      emptyState: "We’re curating the wine list — check back soon.",
+      regionLabel: "Region",
+      typeLabel: "Type",
+      priceLabel: "Price",
+      closeLabel: "Close",
+      searchPlaceholder: "Search wine, region, year...",
+      searchLabel: "Search",
+      filters: {
+        title: "Filter",
+        all: "All",
+        region: "Region",
+        type: "Type",
+      },
+      bottleSizes: [
+        { value: 187.5, label: "Piccolo: 187.5 ml" },
+        { value: 375, label: "Half bottle: 375 ml" },
+        { value: 750, label: "Standard bottle: 750 ml" },
+        { value: 1500, label: "Magnum: 1.5 L (1500 ml)" },
+        { value: 3000, label: "Jeroboam: 3 L" },
+        { value: 4500, label: "Rehoboam: 4.5 L" },
+        { value: 6000, label: "Methuselah: 6 L" },
+        { value: 9000, label: "Salmanazar: 9 L" },
+        { value: 12000, label: "Balthazar: 12 L" },
+        { value: 15000, label: "Nebuchadnezzar: 15 L" },
+        { value: 18000, label: "Solomon: 18 L" },
+        { value: 27000, label: "Goliath: 27 L" },
+        { value: 30000, label: "Melchizedek: 30 L" },
+      ],
     },
   },
   fr: {
@@ -182,6 +261,37 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       title: "Carte des vins",
       description:
         "La sélection de vins d’Oxalá, directement de la plus grande cave nationale, pour accompagner votre repas.",
+      bottleSizeLabel: "Taille de la bouteille",
+      alcoholContentLabel: "Teneur en alcool (% vol.)",
+      yearLabel: "Millésime",
+      emptyState: "Notre carte des vins arrive très bientôt.",
+      regionLabel: "Région",
+      typeLabel: "Type",
+      priceLabel: "Prix",
+      closeLabel: "Fermer",
+      searchPlaceholder: "Chercher vin, région, année...",
+      searchLabel: "Rechercher",
+      filters: {
+        title: "Filtrer",
+        all: "Toutes",
+        region: "Région",
+        type: "Type",
+      },
+      bottleSizes: [
+        { value: 187.5, label: "Piccolo : 187,5 ml" },
+        { value: 375, label: "Demi-bouteille : 375 ml" },
+        { value: 750, label: "Bouteille standard : 750 ml" },
+        { value: 1500, label: "Magnum : 1,5 L (1500 ml)" },
+        { value: 3000, label: "Jéroboam : 3 L" },
+        { value: 4500, label: "Réhoboam : 4,5 L" },
+        { value: 6000, label: "Mathusalem : 6 L" },
+        { value: 9000, label: "Salmanazar : 9 L" },
+        { value: 12000, label: "Balthazar : 12 L" },
+        { value: 15000, label: "Nabuchodonosor : 15 L" },
+        { value: 18000, label: "Salomon : 18 L" },
+        { value: 27000, label: "Goliath : 27 L" },
+        { value: 30000, label: "Melchisédech : 30 L" },
+      ],
     },
   },
   es: {
@@ -225,6 +335,37 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       title: "Carta de vinos",
       description:
         "La selección de vinos de Oxalá directamente de la mayor bodega nacional para acompañar tu comida.",
+      bottleSizeLabel: "Tamaño de la botella",
+      alcoholContentLabel: "Graduación alcohólica (% vol.)",
+      yearLabel: "Año (cosecha)",
+      emptyState: "Muy pronto compartiremos nuestra carta de vinos.",
+      regionLabel: "Región",
+      typeLabel: "Tipo",
+      priceLabel: "Precio",
+      closeLabel: "Cerrar",
+      searchPlaceholder: "Buscar vino, región, año...",
+      searchLabel: "Buscar",
+      filters: {
+        title: "Filtrar",
+        all: "Todas",
+        region: "Región",
+        type: "Tipo",
+      },
+      bottleSizes: [
+        { value: 187.5, label: "Piccolo: 187,5 ml" },
+        { value: 375, label: "Media botella: 375 ml" },
+        { value: 750, label: "Botella estándar: 750 ml" },
+        { value: 1500, label: "Magnum: 1,5 L (1500 ml)" },
+        { value: 3000, label: "Jeroboam: 3 L" },
+        { value: 4500, label: "Roboam: 4,5 L" },
+        { value: 6000, label: "Matusalén: 6 L" },
+        { value: 9000, label: "Salmanazar: 9 L" },
+        { value: 12000, label: "Baltasar: 12 L" },
+        { value: 15000, label: "Nabucodonosor: 15 L" },
+        { value: 18000, label: "Salomón: 18 L" },
+        { value: 27000, label: "Goliat: 27 L" },
+        { value: 30000, label: "Melquisedec: 30 L" },
+      ],
     },
   },
 };

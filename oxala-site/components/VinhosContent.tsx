@@ -4,6 +4,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Vinho } from "@/types/vinho";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+type ScoredVinho = Vinho & { _score: number };
+
 type Props = {
   vinhos: Vinho[];
 };
@@ -51,47 +53,42 @@ export default function VinhosContent({ vinhos }: Props) {
     return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
   }, [orderedVinhos]);
 
-  const filteredVinhos = useMemo(
-    () => {
-      const q = searchTerm.trim().toLowerCase();
-      return orderedVinhos
-        .map((v) => {
-          const matchesType = filterType === "__all" || v.tipo === filterType;
-          const matchesRegion = filterRegion === "__all" || v.regiao === filterRegion;
-          if (!matchesType || !matchesRegion) return null;
+  const filteredVinhos = useMemo<ScoredVinho[]>(() => {
+    const q = searchTerm.trim().toLowerCase();
+    return orderedVinhos
+      .map((v) => {
+        const matchesType = filterType === "__all" || v.tipo === filterType;
+        const matchesRegion = filterRegion === "__all" || v.regiao === filterRegion;
+        if (!matchesType || !matchesRegion) return null;
 
-          if (!q) {
-            return {...v, _score: 0};
-          }
+        if (!q) {
+          return { ...v, _score: 0 };
+        }
 
-          const nome = (v.nome || "").toLowerCase();
-          const regiao = (v.regiao || "").toLowerCase();
-          const tipo = (v.tipo || "").toLowerCase();
-          const ano = v.ano ? String(v.ano) : "";
-          const volume = v.volumeMl ? String(v.volumeMl) : "";
-          const teor = typeof v.teorAlcoolico === "number" ? v.teorAlcoolico.toFixed(1) : "";
+        const nome = (v.nome || "").toLowerCase();
+        const regiao = (v.regiao || "").toLowerCase();
+        const tipo = (v.tipo || "").toLowerCase();
+        const ano = v.ano ? String(v.ano) : "";
+        const volume = v.volumeMl ? String(v.volumeMl) : "";
+        const teor = typeof v.teorAlcoolico === "number" ? v.teorAlcoolico.toFixed(1) : "";
 
-          let score = 0;
-          if (nome.includes(q)) score += 4;
-          if (regiao.includes(q)) score += 2;
-          if (tipo.includes(q)) score += 1;
-          if (ano.includes(q)) score += 1;
-          if (volume.includes(q)) score += 1;
-          if (teor.includes(q)) score += 1;
+        let score = 0;
+        if (nome.includes(q)) score += 4;
+        if (regiao.includes(q)) score += 2;
+        if (tipo.includes(q)) score += 1;
+        if (ano.includes(q)) score += 1;
+        if (volume.includes(q)) score += 1;
+        if (teor.includes(q)) score += 1;
 
-          if (score === 0) return null;
-          return {...v, _score: score};
-        })
-        .filter(Boolean)
-        .sort((a, b) => {
-          const aScore = (a as any)._score as number;
-          const bScore = (b as any)._score as number;
-          if (aScore !== bScore) return bScore - aScore;
-          return (a!.nome || "").localeCompare(b!.nome || "", undefined, {sensitivity: "base"});
-        }) as Vinho[];
-    },
-    [orderedVinhos, filterType, filterRegion, searchTerm]
-  );
+        if (score === 0) return null;
+        return { ...v, _score: score };
+      })
+      .filter((v): v is ScoredVinho => v !== null)
+      .sort((a, b) => {
+        if (a._score !== b._score) return b._score - a._score;
+        return (a.nome || "").localeCompare(b.nome || "", undefined, { sensitivity: "base" });
+      });
+  }, [orderedVinhos, filterType, filterRegion, searchTerm]);
 
   const resolveVolumeLabel = (volume?: number) => {
     if (typeof volume !== "number") return null;

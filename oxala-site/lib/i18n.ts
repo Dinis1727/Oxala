@@ -67,6 +67,9 @@ type TranslationShape = {
       all: string;
       region: string;
       type: string;
+      apply: string;
+      clear: string;
+      refine: string;
     };
     bottleSizes: Array<{ value: number; label: string }>;
   };
@@ -129,6 +132,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         all: "Todas",
         region: "Região",
         type: "Tipo",
+        apply: "Ver vinhos",
+        clear: "Limpar filtros",
+        refine: "Refinar seleção",
       },
       bottleSizes: [
         { value: 187.5, label: "Piccolo: 187,5 ml" },
@@ -202,6 +208,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         all: "All",
         region: "Region",
         type: "Type",
+        apply: "View wines",
+        clear: "Clear filters",
+        refine: "Refine selection",
       },
       bottleSizes: [
         { value: 187.5, label: "Piccolo: 187.5 ml" },
@@ -276,6 +285,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         all: "Toutes",
         region: "Région",
         type: "Type",
+        apply: "Voir les vins",
+        clear: "Effacer les filtres",
+        refine: "Affiner la sélection",
       },
       bottleSizes: [
         { value: 187.5, label: "Piccolo : 187,5 ml" },
@@ -350,6 +362,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
         all: "Todas",
         region: "Región",
         type: "Tipo",
+        apply: "Ver vinos",
+        clear: "Limpiar filtros",
+        refine: "Refinar selección",
       },
       bottleSizes: [
         { value: 187.5, label: "Piccolo: 187,5 ml" },

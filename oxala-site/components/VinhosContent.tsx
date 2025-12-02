@@ -2,7 +2,42 @@
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Vinho } from "@/types/vinho";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import FilterModal from "@/components/FilterModal";
+
+const ALLOWED_TYPES = [
+  "Verde",
+  "Branco",
+  "Tinto",
+  "Rosé",
+  "Espumantes",
+  "Sangrias",
+  "Magnums",
+  "Cafetaria",
+  "Champagnes",
+  "Gin's & Vodkas",
+  "Aguardentes e Cognac",
+  "Whiskys",
+  "Madeira",
+  "Portos",
+  "Águas, Refrigerantes e Cervejas",
+];
+
+const ALLOWED_REGIONS = [
+  "Trás-os-Montes",
+  "Douro",
+  "Távora-Varosa",
+  "Dão",
+  "Beira Interior",
+  "Bairrada",
+  "Lisboa",
+  "Tejo",
+  "Península de Setúbal",
+  "Alentejo",
+  "Algarve",
+  "Madeira",
+  "Açores",
+];
 
 type ScoredVinho = Vinho & { _score: number };
 
@@ -21,7 +56,9 @@ export default function VinhosContent({ vinhos }: Props) {
   const [selected, setSelected] = useState<Vinho | null>(null);
   const [filterType, setFilterType] = useState<string>("__all");
   const [filterRegion, setFilterRegion] = useState<string>("__all");
+  const [filterYear, setFilterYear] = useState<string>("__all");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [showFilterModal, setShowFilterModal] = useState(false);
 
   const volumeLabelMap = useMemo(
     () => new Map(t.bottleSizes.map((item) => [item.value, item.label])),
@@ -41,16 +78,16 @@ export default function VinhosContent({ vinhos }: Props) {
     [vinhos]
   );
 
-  const tipos = useMemo(() => {
-    const set = new Set<string>();
-    orderedVinhos.forEach((v) => v.tipo && set.add(v.tipo));
-    return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
-  }, [orderedVinhos]);
+  const tipos = useMemo(() => ALLOWED_TYPES, []);
 
-  const regioes = useMemo(() => {
+  const regioes = useMemo(() => ALLOWED_REGIONS, []);
+
+  const anos = useMemo(() => {
     const set = new Set<string>();
-    orderedVinhos.forEach((v) => v.regiao && set.add(v.regiao));
-    return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+    orderedVinhos.forEach((v) => {
+      if (v.ano) set.add(String(v.ano));
+    });
+    return Array.from(set).sort((a, b) => Number(b) - Number(a));
   }, [orderedVinhos]);
 
   const filteredVinhos = useMemo<ScoredVinho[]>(() => {
@@ -59,7 +96,8 @@ export default function VinhosContent({ vinhos }: Props) {
       .map((v) => {
         const matchesType = filterType === "__all" || v.tipo === filterType;
         const matchesRegion = filterRegion === "__all" || v.regiao === filterRegion;
-        if (!matchesType || !matchesRegion) return null;
+        const matchesYear = filterYear === "__all" || String(v.ano || "") === filterYear;
+        if (!matchesType || !matchesRegion || !matchesYear) return null;
 
         if (!q) {
           return { ...v, _score: 0 };
@@ -88,7 +126,13 @@ export default function VinhosContent({ vinhos }: Props) {
         if (a._score !== b._score) return b._score - a._score;
         return (a.nome || "").localeCompare(b.nome || "", undefined, { sensitivity: "base" });
       });
-  }, [orderedVinhos, filterType, filterRegion, searchTerm]);
+  }, [orderedVinhos, filterType, filterRegion, filterYear, searchTerm]);
+
+  const clearFilters = () => {
+    setFilterType("__all");
+    setFilterRegion("__all");
+    setFilterYear("__all");
+  };
 
   const resolveVolumeLabel = (volume?: number) => {
     if (typeof volume !== "number") return null;
@@ -120,39 +164,33 @@ export default function VinhosContent({ vinhos }: Props) {
         <h1 className="h-display mt-3 text-2xl text-brand-ink sm:text-3xl">{t.description}</h1>
       </div>
 
-      <div className="mt-8 flex flex-col gap-3 text-sm text-brand-ink/80 md:flex-row md:items-center md:justify-between">
-        <div className="w-full md:w-auto">
+      <div className="mt-8 flex flex-col gap-3 text-sm text-brand-ink/80 md:flex-row md:flex-nowrap md:items-center md:gap-3 md:overflow-x-auto md:pb-1">
+        <div className="w-full md:flex-1 md:min-w-[320px]">
           <SearchInput
             placeholder={t.searchPlaceholder}
             label={t.searchLabel}
             value={searchTerm}
             onChange={setSearchTerm}
-            onClear={() => setSearchTerm("")}
           />
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-[0.75rem] uppercase tracking-[0.35em] text-brand-smoke">{t.filters.title}</span>
-          <FilterSelect
-            label={t.filters.type}
-            options={tipos}
-            value={filterType}
-            onChange={setFilterType}
-            allLabel={t.filters.all}
-          />
-          <FilterSelect
-            label={t.filters.region}
-            options={regioes}
-            value={filterRegion}
-            onChange={setFilterRegion}
-            allLabel={t.filters.all}
-          />
+        <div className="flex w-full justify-end">
+          <button
+            type="button"
+            className="inline-flex items-center gap-2 rounded-full border border-brand-line/70 bg-white/90 px-4 py-2 text-sm font-semibold text-brand-ink shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5"
+            onClick={() => setShowFilterModal(true)}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" className="text-brand-gold">
+              <path fill="currentColor" d="M4 5h16v2H4zm3 6h10v2H7zm4 6h2v2h-2z" />
+            </svg>
+            {t.filters.title}
+          </button>
         </div>
       </div>
 
       {filteredVinhos.length === 0 ? (
         <div className="mt-10 text-center text-brand-ink/70">{t.emptyState}</div>
       ) : (
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4">
           {filteredVinhos.map((vinho) => (
             <article
               key={vinho._id}
@@ -255,6 +293,35 @@ export default function VinhosContent({ vinhos }: Props) {
           </div>
         </div>
       )}
+
+      <FilterModal
+        isOpen={showFilterModal}
+        onClose={() => setShowFilterModal(false)}
+        typeValue={filterType}
+        onTypeChange={setFilterType}
+        typeOptions={["__all", ...tipos]}
+        regionValue={filterRegion}
+        onRegionChange={setFilterRegion}
+        regionOptions={["__all", ...regioes]}
+        yearValue={filterYear}
+        onYearChange={setFilterYear}
+        yearOptions={["__all", ...anos]}
+        labels={{
+          filtersTitle: t.filters.title,
+          refineTitle: t.filters.refine,
+          typeLabel: t.filters.type,
+          regionLabel: t.filters.region,
+          yearLabel: t.yearLabel,
+          allLabel: t.filters.all,
+          closeLabel: t.closeLabel,
+          applyLabel: t.filters.apply,
+          clearLabel: t.filters.clear,
+        }}
+        onClearFilters={() => {
+          clearFilters();
+          setFilterYear("__all");
+        }}
+      />
     </section>
   );
 }
@@ -268,88 +335,14 @@ function DetailChip({ label, value }: { label: string; value: string }) {
   );
 }
 
-type FilterSelectProps = {
-  label: string;
-  options: string[];
-  value: string;
-  onChange: (val: string) => void;
-  allLabel: string;
-};
-
-function FilterSelect({ label, options, value, onChange, allLabel }: FilterSelectProps) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    window.addEventListener("mousedown", handler);
-    return () => window.removeEventListener("mousedown", handler);
-  }, []);
-
-  const handleSelect = (val: string) => {
-    onChange(val);
-    setOpen(false);
-  };
-
-  return (
-    <div ref={ref} className="relative inline-flex items-center gap-2 rounded-full border border-brand-line/70 bg-gradient-to-br from-white to-[#f4e9d8] px-3 py-1.5 shadow-[0_10px_26px_rgba(0,0,0,0.1)]">
-      <span className="text-xs font-semibold text-brand-ink/70">{label}</span>
-      <button
-        type="button"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-brand-ink focus:outline-none"
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span>{value === "__all" ? allLabel : value}</span>
-        <span className={`text-brand-gold transition ${open ? "rotate-180" : ""}`}>⌄</span>
-      </button>
-      {open && (
-        <div className="absolute left-2 top-[115%] z-30 min-w-[160px] overflow-hidden rounded-2xl border border-brand-line/70 bg-white shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
-          <ul className="max-h-64 overflow-y-auto text-sm text-brand-ink">
-            <li>
-              <button
-                className={`flex w-full items-center justify-between px-3 py-2 text-left transition hover:bg-brand-line/20 ${
-                  value === "__all" ? "font-semibold text-brand-gold" : ""
-                }`}
-                onClick={() => handleSelect("__all")}
-              >
-                <span>{allLabel}</span>
-                {value === "__all" && <span className="text-brand-gold">•</span>}
-              </button>
-            </li>
-            {options.map((opt) => (
-              <li key={opt}>
-                <button
-                  className={`flex w-full items-center justify-between px-3 py-2 text-left transition hover:bg-brand-line/20 ${
-                    value === opt ? "font-semibold text-brand-gold" : ""
-                  }`}
-                  onClick={() => handleSelect(opt)}
-                >
-                  <span>{opt}</span>
-                  {value === opt && <span className="text-brand-gold">•</span>}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
 type SearchInputProps = {
   label: string;
   placeholder: string;
   value: string;
   onChange: (val: string) => void;
-  onClear?: () => void;
 };
 
-function SearchInput({ label, placeholder, value, onChange, onClear }: SearchInputProps) {
+function SearchInput({ label, placeholder, value, onChange }: SearchInputProps) {
   return (
     <label className="inline-flex w-full flex-1 items-center gap-2 rounded-full border border-brand-line/70 bg-white/95 px-4 py-2 shadow-[0_10px_26px_rgba(0,0,0,0.1)]">
       <span className="whitespace-nowrap text-xs font-semibold text-brand-ink/70">{label}</span>
@@ -362,21 +355,11 @@ function SearchInput({ label, placeholder, value, onChange, onClear }: SearchInp
         </svg>
         <input
           className="min-w-0 flex-1 bg-transparent text-sm text-brand-ink placeholder:text-brand-smoke/70 focus:outline-none"
-          type="search"
+          type="text"
           value={value}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
         />
-        {value && (
-          <button
-            type="button"
-            aria-label="Limpar"
-            className="text-lg font-semibold text-brand-gold transition hover:scale-110"
-            onClick={onClear}
-          >
-            ×
-          </button>
-        )}
       </div>
     </label>
   );

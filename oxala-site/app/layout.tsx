@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { cookies } from "next/headers";
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={initialLanguage}>
       <body className={`${manrope.variable} ${cormorant.variable} text-brand-ink antialiased`}>
         <LanguageProvider initialLanguage={initialLanguage}>
+          <ScrollToTop />
           <div className="relative flex min-h-screen flex-col">
             <Header />
             <main className="flex-1 pt-28 pb-16">

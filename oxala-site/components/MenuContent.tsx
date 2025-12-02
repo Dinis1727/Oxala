@@ -11,7 +11,7 @@ type Props = {
 export default function MenuContent({ categorias }: Props) {
   const { translations } = useLanguage();
   const t = translations.menu;
-  const navMarkerRef = useRef<HTMLDivElement | null>(null);
+  const categoryNavRef = useRef<HTMLDivElement | null>(null);
 
   const filteredCategorias = useMemo(
     () =>
@@ -45,35 +45,87 @@ export default function MenuContent({ categorias }: Props) {
   const firstAnchorId = categoriesWithId[0]?._anchorId || null;
   const [activeCategory, setActiveCategory] = useState<string | null>(firstAnchorId);
   const [showTop, setShowTop] = useState(false);
+  const activeCategoryRef = useRef<string | null>(firstAnchorId);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveCategory(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0.1 }
-    );
+    activeCategoryRef.current = activeCategory;
+  }, [activeCategory]);
 
-    categoriesWithId.forEach(({ _anchorId }) => {
-      const el = document.getElementById(_anchorId);
-      if (el) observer.observe(el);
-    });
+  useEffect(() => {
+    let ticking = false;
 
-    return () => observer.disconnect();
+    const updateActiveCategory = () => {
+      ticking = false;
+      if (!categoriesWithId.length) return;
+
+      const focusLine = window.innerHeight * 0.32;
+      let bestId: string | null = categoriesWithId[0]?._anchorId || null;
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      categoriesWithId.forEach(({ _anchorId }) => {
+        const el = document.getElementById(_anchorId);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+
+        if (rect.bottom <= 56 || rect.top >= window.innerHeight * 0.9) {
+          return;
+        }
+
+        const distance = Math.abs(rect.top - focusLine);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestId = _anchorId;
+        }
+      });
+
+      if (bestId && bestId !== activeCategoryRef.current) {
+        activeCategoryRef.current = bestId;
+        setActiveCategory(bestId);
+      }
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateActiveCategory);
+    };
+
+    updateActiveCategory();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", onScroll);
   }, [categoriesWithId]);
 
   useEffect(() => {
-    const handler = () => {
-      const navTop = navMarkerRef.current?.getBoundingClientRect().top ?? 0;
-      setShowTop(navTop < 0);
+    const handleScroll = () => {
+      if (!categoriesWithId.length) return;
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 12;
+      if (nearBottom) {
+        const lastId = categoriesWithId[categoriesWithId.length - 1]._anchorId;
+        if (lastId !== activeCategoryRef.current) {
+          activeCategoryRef.current = lastId;
+          setActiveCategory(lastId);
+        }
+      }
     };
-    handler();
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [categoriesWithId]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowTop(!entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: "0px" }
+    );
+
+    if (categoryNavRef.current) {
+      observer.observe(categoryNavRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const scrollToId = (id: string) => {
@@ -86,7 +138,7 @@ export default function MenuContent({ categorias }: Props) {
   return (
     <section
       id="ementa"
-      className="rounded-[36px] border border-white/12 bg-gradient-to-br from-[#f5f0e7]/95 via-[#f7f2e9]/92 to-[#eee4d3]/90 px-5 py-10 shadow-[0_30px_90px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:px-8 md:px-12 md:py-16"
+      className="relative rounded-[36px] border border-white/12 bg-gradient-to-br from-[#f5f0e7]/95 via-[#f7f2e9]/92 to-[#eee4d3]/90 px-5 py-10 shadow-[0_30px_90px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:px-8 md:px-12 md:py-16"
     >
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-[0.65rem] uppercase tracking-[0.5em] text-brand-smoke">{t.introTag}</p>
@@ -94,8 +146,8 @@ export default function MenuContent({ categorias }: Props) {
         <p className="mt-4 text-base text-brand-ink/75">{t.introDescription}</p>
       </div>
 
-      <div ref={navMarkerRef} className="mt-12 flex flex-col gap-6">
-        <div className="lg:hidden">
+      <div className="mt-12 flex flex-col gap-6">
+        <div ref={categoryNavRef} className="lg:hidden">
           <div className="flex items-center justify-between">
             <p className="text-[0.7rem] uppercase tracking-[0.4em] text-brand-smoke">{t.categoryLabel}</p>
           </div>
@@ -154,7 +206,7 @@ export default function MenuContent({ categorias }: Props) {
               <article
                 key={categoria._id}
                 id={categoria._anchorId}
-                className="rounded-[32px] border border-brand-line/70 bg-[#f7f1e6]/90 p-6 shadow-[0_26px_60px_rgba(0,0,0,0.12)] ring-1 ring-brand-line/40 md:p-10"
+                className="rounded-[32px] border border-brand-line/70 bg-[#f7f1e6]/90 p-6 shadow-[0_26px_60px_rgba(0,0,0,0.12)] ring-1 ring-brand-line/40 scroll-mt-28 md:p-10 lg:scroll-mt-32"
               >
                 <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <div>
@@ -226,7 +278,7 @@ export default function MenuContent({ categorias }: Props) {
       {showTop && (
         <button
           aria-label="Voltar ao topo"
-          className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full border border-brand-gold/60 bg-brand-gold/90 px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5"
+          className="absolute bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full border border-brand-gold/60 bg-brand-gold/90 px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5"
           onClick={() => scrollToId("ementa")}
         >
           ↑ Topo

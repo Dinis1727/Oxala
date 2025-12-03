@@ -1,5 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { LuArrowUpRight, LuChevronUp } from "react-icons/lu";
 import MenuCard from "@/components/MenuCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Categoria } from "@/types/menu";
@@ -12,6 +14,9 @@ export default function MenuContent({ categorias }: Props) {
   const { translations } = useLanguage();
   const t = translations.menu;
   const categoryNavRef = useRef<HTMLDivElement | null>(null);
+  const topSentinelRef = useRef<HTMLDivElement | null>(null);
+  const bottomSentinelRef = useRef<HTMLDivElement | null>(null);
+  const categoryScrollTriggerRef = useRef<HTMLDivElement | null>(null);
 
   const filteredCategorias = useMemo(
     () =>
@@ -45,11 +50,17 @@ export default function MenuContent({ categorias }: Props) {
   const firstAnchorId = categoriesWithId[0]?._anchorId || null;
   const [activeCategory, setActiveCategory] = useState<string | null>(firstAnchorId);
   const [showTop, setShowTop] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const activeCategoryRef = useRef<string | null>(firstAnchorId);
 
   useEffect(() => {
     activeCategoryRef.current = activeCategory;
   }, [activeCategory]);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -114,17 +125,30 @@ export default function MenuContent({ categorias }: Props) {
   }, [categoriesWithId]);
 
   useEffect(() => {
+    const top = topSentinelRef.current;
+    const bottom = bottomSentinelRef.current;
+    if (!top || !bottom) return;
+
+    let topVisible = true;
+    let bottomVisible = false;
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowTop(!entry.isIntersecting);
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === top) topVisible = entry.isIntersecting;
+          if (entry.target === bottom) bottomVisible = entry.isIntersecting;
+        });
+        setShowTop(!topVisible && !bottomVisible);
       },
-      { threshold: 0, rootMargin: "0px" }
+      {
+        root: null,
+        threshold: 0,
+        rootMargin: "0px 0px -10% 0px",
+      }
     );
 
-    if (categoryNavRef.current) {
-      observer.observe(categoryNavRef.current);
-    }
-
+    observer.observe(top);
+    observer.observe(bottom);
     return () => observer.disconnect();
   }, []);
 
@@ -147,6 +171,7 @@ export default function MenuContent({ categorias }: Props) {
       </div>
 
       <div className="mt-12 flex flex-col gap-6">
+        <div ref={topSentinelRef} aria-hidden className="h-px w-full" />
         <div ref={categoryNavRef} className="lg:hidden">
           <div className="flex items-center justify-between">
             <p className="text-[0.7rem] uppercase tracking-[0.4em] text-brand-smoke">{t.categoryLabel}</p>
@@ -217,8 +242,8 @@ export default function MenuContent({ categorias }: Props) {
                     href="/vinhos"
                     className="inline-flex items-center gap-2 self-start rounded-full border border-brand-gold/60 bg-brand-gold/10 px-4 py-2 text-sm font-semibold text-brand-gold shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(0,0,0,0.12)]"
                   >
-                    Ver carta de vinhos
-                    <span aria-hidden>↗</span>
+                    {t.winesButton}
+                    <LuArrowUpRight className="h-4 w-4" aria-hidden />
                   </a>
                 </header>
 
@@ -274,16 +299,28 @@ export default function MenuContent({ categorias }: Props) {
         <p className="mt-2">{t.taxLine2}</p>
         <p className="mt-2 font-semibold tracking-[0.25em] text-brand-smoke">{t.taxLaw}</p>
       </div>
+      <div ref={bottomSentinelRef} aria-hidden className="h-px w-full" />
 
-      {showTop && (
-        <button
-          aria-label="Voltar ao topo"
-          className="absolute bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full border border-brand-gold/60 bg-brand-gold/90 px-4 py-2 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5"
-          onClick={() => scrollToId("ementa")}
-        >
-          ↑ Topo
-        </button>
-      )}
+      {mounted &&
+        createPortal(
+          <div
+            className={`pointer-events-none fixed bottom-0 right-0 z-40 flex items-end justify-end pb-12 pr-2 transition-all duration-300 ease-out sm:pr-3 md:pr-6 lg:pr-10 md:pb-16 ${
+              showTop ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+            aria-hidden={!showTop}
+          >
+            <button
+              aria-label="Voltar ao topo"
+            className={`inline-flex h-12 w-12 items-center justify-center rounded-full border border-brand-gold/60 bg-brand-gold/90 text-base font-semibold text-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)] ${
+              showTop ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+            onClick={() => scrollToId("ementa")}
+          >
+            <LuChevronUp className="h-4 w-4 md:h-5 md:w-5" aria-hidden />
+          </button>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }

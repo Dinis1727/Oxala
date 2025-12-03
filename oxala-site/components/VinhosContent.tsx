@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Vinho } from "@/types/vinho";
 import { useEffect, useMemo, useState } from "react";
+import { LuListFilter, LuSearch } from "react-icons/lu";
 import FilterModal from "@/components/FilterModal";
 
 const ALLOWED_TYPES = [
@@ -179,9 +180,7 @@ export default function VinhosContent({ vinhos }: Props) {
             className="inline-flex items-center gap-2 rounded-full border border-brand-line/70 bg-white/90 px-4 py-2 text-sm font-semibold text-brand-ink shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5"
             onClick={() => setShowFilterModal(true)}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" className="text-brand-gold">
-              <path fill="currentColor" d="M4 5h16v2H4zm3 6h10v2H7zm4 6h2v2h-2z" />
-            </svg>
+            <LuListFilter className="h-4 w-4 text-brand-gold" aria-hidden />
             {t.filters.title}
           </button>
         </div>
@@ -347,12 +346,7 @@ function SearchInput({ label, placeholder, value, onChange }: SearchInputProps) 
     <label className="inline-flex w-full flex-1 items-center gap-2 rounded-full border border-brand-line/70 bg-white/95 px-4 py-2 shadow-[0_10px_26px_rgba(0,0,0,0.1)]">
       <span className="whitespace-nowrap text-xs font-semibold text-brand-ink/70">{label}</span>
       <div className="flex w-full min-w-0 items-center gap-2">
-        <svg width="16" height="16" viewBox="0 0 24 24" className="text-brand-smoke">
-          <path
-            fill="currentColor"
-            d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.71.71l.27.28v.79l5 4.99L20.49 19zM5 10a5 5 0 1 1 10 0a5 5 0 0 1-10 0"
-          />
-        </svg>
+        <LuSearch className="h-4 w-4 text-brand-smoke" aria-hidden />
         <input
           className="min-w-0 flex-1 bg-transparent text-sm text-brand-ink placeholder:text-brand-smoke/70 focus:outline-none"
           type="text"

@@ -31,6 +31,7 @@ type TranslationShape = {
     categoryLabel: string;
     fishNote: string;
     meatNote: string;
+    winesButton: string;
     taxLine1: string;
     taxLine2: string;
     taxLaw: string;
@@ -93,6 +94,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       categoryLabel: "Categoria",
       fishNote: "Guarnecidos com batata, legumes e salada | pratos individuais sob consulta",
       meatNote: "Guarnecidos com batata, arroz e salada | pratos individuais sob consulta",
+      winesButton: "Ver carta de vinhos",
       taxLine1: "IVA incluído em todos os preços apresentados.",
       taxLine2:
         "Nenhum prato, produto alimentar ou bebida, incluindo o couvert, pode ser cobrado se não for solicitado pelo cliente ou por este for inutilizado.",
@@ -170,6 +172,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       categoryLabel: "Category",
       fishNote: "Served with potatoes, vegetables and salad | individual portions on request",
       meatNote: "Served with potatoes, rice and salad | individual portions on request",
+      winesButton: "View wine list",
       taxLine1: "VAT included in all listed prices.",
       taxLine2:
         "No dish, food product or beverage, including couvert, can be charged if not requested by the guest or if unusable.",
@@ -246,6 +249,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       categoryLabel: "Catégorie",
       fishNote: "Servis avec pommes de terre, légumes et salade | plats individuels sur demande",
       meatNote: "Servis avec pommes de terre, riz et salade | plats individuels sur demande",
+      winesButton: "Voir la carte des vins",
       taxLine1: "TVA incluse dans tous les prix affichés.",
       taxLine2:
         "Aucun plat, produit alimentaire ou boisson, y compris le couvert, ne peut être facturé s’il n’a pas été demandé par le client ou s’il est inutilisable.",
@@ -323,6 +327,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       categoryLabel: "Categoría",
       fishNote: "Acompañados con patata, verduras y ensalada | platos individuales bajo consulta",
       meatNote: "Acompañados con patata, arroz y ensalada | platos individuales bajo consulta",
+      winesButton: "Ver carta de vinos",
       taxLine1: "IVA incluido en todos los precios presentados.",
       taxLine2:
         "Ningún plato, producto alimenticio o bebida, incluido el couvert, puede cobrarse si no fue solicitado por el cliente o si se inutiliza.",

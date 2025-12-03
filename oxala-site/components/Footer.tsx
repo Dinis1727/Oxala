@@ -1,27 +1,18 @@
 "use client";
 import Link from "next/link";
+import { LuFacebook, LuInstagram } from "react-icons/lu";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const socialLinks = [
   {
     href: "https://www.instagram.com/restauranteoxalaovar/",
     label: "Instagram",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden fill="none" stroke="currentColor" strokeWidth={1.6}>
-        <rect x="4" y="4" width="16" height="16" rx="5" />
-        <circle cx="12" cy="12" r="3.4" />
-        <circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
+    icon: <LuInstagram className="h-4 w-4" aria-hidden />,
   },
   {
     href: "https://www.facebook.com/oxalarestaurante",
     label: "Facebook",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden fill="none" stroke="currentColor" strokeWidth={1.6}>
-        <path d="M14.5 7H16V4.5h-1.5C12.6 4.5 11 6.1 11 8v1.5H9v2.4h2v7.6h2.6v-7.6H16l.5-2.4h-2v-1c0-.6.4-1 1-1Z" />
-      </svg>
-    ),
+    icon: <LuFacebook className="h-4 w-4" aria-hidden />,
   },
 ];
 

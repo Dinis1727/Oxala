@@ -2,43 +2,10 @@
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Vinho } from "@/types/vinho";
-import { useEffect, useMemo, useState } from "react";
-import { LuListFilter, LuSearch } from "react-icons/lu";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { LuChevronUp, LuListFilter, LuSearch } from "react-icons/lu";
 import FilterModal from "@/components/FilterModal";
-
-const ALLOWED_TYPES = [
-  "Verde",
-  "Branco",
-  "Tinto",
-  "Rosé",
-  "Espumantes",
-  "Sangrias",
-  "Magnums",
-  "Cafetaria",
-  "Champagnes",
-  "Gin's & Vodkas",
-  "Aguardentes e Cognac",
-  "Whiskys",
-  "Madeira",
-  "Portos",
-  "Águas, Refrigerantes e Cervejas",
-];
-
-const ALLOWED_REGIONS = [
-  "Trás-os-Montes",
-  "Douro",
-  "Távora-Varosa",
-  "Dão",
-  "Beira Interior",
-  "Bairrada",
-  "Lisboa",
-  "Tejo",
-  "Península de Setúbal",
-  "Alentejo",
-  "Algarve",
-  "Madeira",
-  "Açores",
-];
 
 type ScoredVinho = Vinho & { _score: number };
 
@@ -60,6 +27,11 @@ export default function VinhosContent({ vinhos }: Props) {
   const [filterYear, setFilterYear] = useState<string>("__all");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const previousOverflowRef = useRef<string | null>(null);
+  const [showTop, setShowTop] = useState(false);
+  const topSentinelRef = useRef<HTMLDivElement | null>(null);
+  const bottomSentinelRef = useRef<HTMLDivElement | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const volumeLabelMap = useMemo(
     () => new Map(t.bottleSizes.map((item) => [item.value, item.label])),
@@ -79,9 +51,21 @@ export default function VinhosContent({ vinhos }: Props) {
     [vinhos]
   );
 
-  const tipos = useMemo(() => ALLOWED_TYPES, []);
+  const tipos = useMemo(() => {
+    const set = new Set<string>();
+    vinhos.forEach((v) => {
+      if (v.tipo) set.add(v.tipo);
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+  }, [vinhos]);
 
-  const regioes = useMemo(() => ALLOWED_REGIONS, []);
+  const regioes = useMemo(() => {
+    const set = new Set<string>();
+    vinhos.forEach((v) => {
+      if (v.regiao) set.add(v.regiao);
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+  }, [vinhos]);
 
   const anos = useMemo(() => {
     const set = new Set<string>();
@@ -158,8 +142,55 @@ export default function VinhosContent({ vinhos }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [selected]);
 
+  useEffect(() => {
+    if (selected) {
+      if (previousOverflowRef.current === null) {
+        previousOverflowRef.current = document.body.style.overflow;
+      }
+      document.body.style.overflow = "hidden";
+    } else if (previousOverflowRef.current !== null) {
+      document.body.style.overflow = previousOverflowRef.current;
+      previousOverflowRef.current = null;
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  useEffect(() => {
+    const top = topSentinelRef.current;
+    const bottom = bottomSentinelRef.current;
+    if (!top || !bottom) return;
+
+    let topVisible = true;
+    let bottomVisible = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === top) topVisible = entry.isIntersecting;
+          if (entry.target === bottom) bottomVisible = entry.isIntersecting;
+        });
+        setShowTop(!topVisible && !bottomVisible);
+      },
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(top);
+    observer.observe(bottom);
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <section className="overflow-hidden rounded-[28px] border border-brand-line/60 bg-gradient-to-br from-[#faf4e7]/80 via-[#f4e7d4]/78 to-[#e7dcc6]/78 px-4 py-8 shadow-[0_26px_70px_rgba(0,0,0,0.16)] backdrop-blur-sm sm:px-6 md:px-8">
+    <section className="min-h-[92vh] overflow-hidden rounded-[28px] border border-brand-line/60 bg-gradient-to-br from-[#faf4e7]/80 via-[#f4e7d4]/78 to-[#e7dcc6]/78 px-4 py-8 shadow-[0_26px_70px_rgba(0,0,0,0.16)] backdrop-blur-sm sm:px-6 md:px-8">
+      <div ref={topSentinelRef} aria-hidden className="h-px w-full" />
+      <div ref={topSentinelRef} aria-hidden className="h-px w-full" />
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <p className="text-[0.62rem] uppercase tracking-[0.45em] text-brand-smoke">{t.title}</p>
         <h1 className="h-display mt-3 text-2xl text-brand-ink sm:text-3xl">{t.description}</h1>
@@ -177,8 +208,11 @@ export default function VinhosContent({ vinhos }: Props) {
         <div className="flex w-full justify-end">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-full border border-brand-line/70 bg-white/90 px-4 py-2 text-sm font-semibold text-brand-ink shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5"
-            onClick={() => setShowFilterModal(true)}
+            className="inline-flex items-center gap-2 rounded-full border border-brand-line/70 bg-white/90 px-4 py-2 text-sm font-semibold text-brand-ink shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setTimeout(() => setShowFilterModal(true), 160);
+            }}
           >
             <LuListFilter className="h-4 w-4 text-brand-gold" aria-hidden />
             {t.filters.title}
@@ -223,12 +257,13 @@ export default function VinhosContent({ vinhos }: Props) {
         </div>
       )}
 
-      {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-3xl overflow-hidden rounded-[32px] bg-white text-brand-ink shadow-[0_30px_90px_rgba(0,0,0,0.4)]">
+      {mounted && selected &&
+        createPortal(
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/60 px-4 py-6 backdrop-blur-sm sm:py-10">
+            <div className="relative w-full max-w-2xl overflow-hidden rounded-[28px] bg-white text-brand-ink shadow-[0_26px_70px_rgba(0,0,0,0.38)] sm:max-w-[680px]">
             <button
               aria-label={t.closeLabel}
-              className="absolute right-4 top-4 z-30 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-brand-ink shadow-lg shadow-black/10 transition hover:scale-105"
+              className="absolute right-4 top-4 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-lg font-semibold text-brand-ink shadow-lg shadow-black/10 transition hover:scale-105"
               onClick={() => setSelected(null)}
             >
               ×
@@ -289,8 +324,29 @@ export default function VinhosContent({ vinhos }: Props) {
                 )}
               </div>
             </div>
-          </div>
-        </div>
+            </div>
+          </div>,
+          document.body
+        )}
+
+      {mounted && createPortal(
+        <div
+          className={`pointer-events-none fixed bottom-0 right-0 z-40 flex items-end justify-end pb-10 pr-4 transition-all duration-300 ease-out sm:pb-12 sm:pr-6 ${
+            showTop ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+          aria-hidden={!showTop}
+        >
+          <button
+            aria-label="Voltar ao topo"
+            className={`inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-black/60 bg-brand-gold/90 text-lg font-semibold text-white shadow-[0_18px_42px_rgba(0,0,0,0.35)] ring-2 ring-black/10 transition hover:-translate-y-0.5 hover:shadow-[0_22px_56px_rgba(0,0,0,0.4)] ${
+              showTop ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+            onClick={scrollToTop}
+          >
+            <LuChevronUp className="h-5 w-5" aria-hidden />
+          </button>
+        </div>,
+        document.body
       )}
 
       <FilterModal
@@ -321,6 +377,7 @@ export default function VinhosContent({ vinhos }: Props) {
           setFilterYear("__all");
         }}
       />
+      <div ref={bottomSentinelRef} aria-hidden className="h-px w-full" />
     </section>
   );
 }

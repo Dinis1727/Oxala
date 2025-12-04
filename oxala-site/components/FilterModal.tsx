@@ -45,12 +45,28 @@ export default function FilterModal({
 }: FilterModalProps) {
   const [isClosing, setIsClosing] = useState(false);
   const closeTimeout = useRef<NodeJS.Timeout | null>(null);
+  const previousOverflow = useRef<string | null>(null);
 
   useEffect(() => {
     return () => {
       if (closeTimeout.current) clearTimeout(closeTimeout.current);
+      if (previousOverflow.current !== null) {
+        document.body.style.overflow = previousOverflow.current;
+      }
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen || isClosing) {
+      if (previousOverflow.current === null) {
+        previousOverflow.current = document.body.style.overflow;
+      }
+      document.body.style.overflow = "hidden";
+    } else if (previousOverflow.current !== null) {
+      document.body.style.overflow = previousOverflow.current;
+      previousOverflow.current = null;
+    }
+  }, [isOpen, isClosing]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -71,11 +87,12 @@ export default function FilterModal({
       />
 
       <div
-        className={`fixed inset-x-0 bottom-0 z-50 flex h-[82vh] max-h-[720px] w-full flex-col overflow-hidden rounded-t-[28px] border border-brand-line/60 bg-white text-brand-ink shadow-[0_30px_90px_rgba(0,0,0,0.45)] transition-transform duration-300 ease-in-out sm:bottom-auto sm:right-0 sm:top-0 sm:h-full sm:max-h-full sm:w-[520px] sm:flex-col sm:rounded-none sm:border-l sm:border-t-0 sm:border-b-0 ${
-          isClosing ? "translate-y-full sm:translate-x-full sm:translate-y-0" : "translate-y-0 sm:translate-x-0"
+        className={`fixed inset-0 z-50 flex justify-end transition-transform duration-300 ease-in-out ${
+          isClosing ? "translate-y-full sm:translate-y-0 sm:translate-x-full" : "translate-y-0 sm:translate-x-0"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
+        <div className="flex min-h-[70vh] h-[92vh] max-h-[92vh] w-[min(88vw,560px)] max-w-full flex-col overflow-hidden rounded-t-[28px] border border-brand-line/60 bg-white text-brand-ink shadow-[0_30px_90px_rgba(0,0,0,0.45)] sm:w-[min(84vw,560px)] sm:min-h-[70vh] sm:h-[90vh] sm:max-h-[90vh] md:w-[min(78vw,560px)] md:min-h-[70vh] md:h-[88vh] md:max-h-[88vh] lg:w-[480px] lg:min-h-[70vh] lg:h-[92vh] lg:max-h-[92vh] sm:rounded-none sm:border-l sm:border-t-0 sm:border-b-0">
         <header className="flex items-center justify-between border-b border-brand-line/50 px-5 py-4">
           <div>
             <p className="text-[0.65rem] uppercase tracking-[0.35em] text-brand-smoke">{labels.filtersTitle}</p>
@@ -178,26 +195,26 @@ export default function FilterModal({
             </div>
           </section>
         </div>
-
-        <footer className="flex items-center gap-3 border-t border-brand-line/50 px-5 py-4">
-          <button
-            type="button"
-            className="flex-1 rounded-full border border-brand-line/70 bg-brand-ink/5 px-4 py-2 text-sm font-semibold text-brand-ink transition hover:-translate-y-0.5"
-            onClick={() => {
-              onClearFilters();
-              handleClose();
-            }}
-          >
-            {labels.clearLabel}
-          </button>
-          <button
-            type="button"
-            className="flex-1 rounded-full bg-brand-gold px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,0,0,0.2)] transition hover:-translate-y-0.5"
-            onClick={handleClose}
-          >
-            {labels.applyLabel}
-          </button>
-        </footer>
+          <footer className="flex items-center gap-3 border-t border-brand-line/50 px-5 py-4">
+            <button
+              type="button"
+              className="flex-1 rounded-full border border-brand-line/70 bg-brand-ink/5 px-4 py-2 text-sm font-semibold text-brand-ink transition hover:-translate-y-0.5"
+              onClick={() => {
+                onClearFilters();
+                handleClose();
+              }}
+            >
+              {labels.clearLabel}
+            </button>
+            <button
+              type="button"
+              className="flex-1 rounded-full bg-brand-gold px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,0,0,0.2)] transition hover:-translate-y-0.5"
+              onClick={handleClose}
+            >
+              {labels.applyLabel}
+            </button>
+          </footer>
+        </div>
       </div>
 
     </>

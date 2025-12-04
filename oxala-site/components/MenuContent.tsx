@@ -16,7 +16,6 @@ export default function MenuContent({ categorias }: Props) {
   const categoryNavRef = useRef<HTMLDivElement | null>(null);
   const topSentinelRef = useRef<HTMLDivElement | null>(null);
   const bottomSentinelRef = useRef<HTMLDivElement | null>(null);
-  const categoryScrollTriggerRef = useRef<HTMLDivElement | null>(null);
 
   const filteredCategorias = useMemo(
     () =>
@@ -58,8 +57,8 @@ export default function MenuContent({ categorias }: Props) {
   }, [activeCategory]);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   useEffect(() => {

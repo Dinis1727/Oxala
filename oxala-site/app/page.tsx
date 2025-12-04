@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { LANGUAGE_COOKIE, defaultLanguage, isLanguageCode, LanguageCode, translations } from "@/lib/i18n";
+import { HeroVideo } from "@/components/HeroVideo";
 
 async function resolveLanguage(): Promise<LanguageCode> {
   const cookieLang = (await cookies()).get(LANGUAGE_COOKIE)?.value;
@@ -13,11 +14,17 @@ export default async function Home() {
 
   return (
     <section className="relative isolate overflow-hidden rounded-[36px] border border-white/8 bg-[#0b0907] shadow-[0_30px_100px_rgba(0,0,0,0.55)]">
-      <div className="relative mx-auto max-w-5xl px-4 pt-6 sm:px-6 md:px-10">
+      <div className="relative mx-auto max-w-6xl px-4 pt-6 sm:px-6 md:px-10">
         <div className="relative overflow-hidden rounded-[32px] shadow-[0_28px_90px_rgba(0,0,0,0.38)]">
+          <HeroVideo
+            className="w-full object-cover brightness-105 saturate-110 h-[74vh] sm:h-[80vh] lg:h-[88vh]"
+            src="/Garrafeira_escurecida.MP4"
+            poster="/hero-bg.png"
+            playbackRate={1.6}
+          />
           <div
-            className="aspect-[4/3] w-full bg-cover bg-center brightness-105 saturate-110"
-            style={{ backgroundImage: "url('/hero-bg.png')" }}
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/55"
+            aria-hidden="true"
           />
         </div>
       </div>

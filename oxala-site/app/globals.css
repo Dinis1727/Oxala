@@ -6,10 +6,11 @@
 :root {
   --font-manrope: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --font-cormorant: "Cormorant Garamond", "Garamond", "Times New Roman", serif;
+  --font-maison: "Maison Neue", "MaisonNeue", var(--font-manrope);
 }
 
 body {
-  font-family: var(--font-manrope);
+  font-family: var(--font-maison);
   color: theme("colors.brand.ink");
   background:
     radial-gradient(circle at 18% 20%, rgba(200, 164, 107, 0.18), transparent 35%),
@@ -17,13 +18,14 @@ body {
     linear-gradient(145deg, #0d0a08 0%, #14100c 55%, #0e0b08 100%);
   min-height: 100vh;
 }
-.h-display { font-family: var(--font-cormorant); }
+.h-display { font-family: var(--font-maison); }
+.font-maison { font-family: var(--font-maison); }
 
 ::selection {
   background: theme("colors.brand.gold");
   color: #0d0a08;
 }
-.h-display { font-family: var(--font-cormorant); }
+.h-display { font-family: var(--font-maison); }
 
 /* container responsivo */
 .container-px { @apply px-4 sm:px-6 lg:px-8; }

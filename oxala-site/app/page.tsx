@@ -32,21 +32,6 @@ export default async function Home() {
             </p>
           </div>
         </div>
-
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
-          <Link
-            href="/ementa"
-            className="inline-flex items-center gap-2 rounded-xl border border-[#d8b77a] bg-gradient-to-r from-[#d8b77a] via-[#c8a46b] to-[#b89156] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#2b1d0e] shadow-[0_18px_38px_rgba(200,164,107,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_55px_rgba(200,164,107,0.45)] md:px-7 md:py-3.5 md:text-base md:tracking-[0.2em]"
-          >
-            {t.home.ctaMenu}
-          </Link>
-          <Link
-            href="/vinhos"
-            className="inline-flex items-center gap-2 rounded-xl border border-[#ffffff33] bg-[#12100d]/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-[0_16px_36px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5 hover:border-[#d8b77a] hover:bg-[#1a1611] md:px-7 md:py-3.5 md:text-base md:tracking-[0.2em]"
-          >
-            {t.home.ctaWines}
-          </Link>
-        </div>
       </div>
     </section>
   );

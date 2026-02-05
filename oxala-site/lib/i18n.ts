@@ -39,8 +39,6 @@ type TranslationShape = {
   home: {
     heroTitle: string;
     heroDescription: string;
-    ctaMenu: string;
-    ctaWines: string;
   };
   footer: {
     tagline: string;
@@ -104,8 +102,6 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       heroTitle: "Restaurante Oxalá",
       heroDescription:
         "Seja bem-vindo ao Restaurante Oxalá, onde o sabor do mar encontra a tradição e a elegância à mesa. Convidamo-lo a descobrir a nossa ementa e carta de vinhos.",
-      ctaMenu: "Ver ementa",
-      ctaWines: "Ver carta de vinhos",
     },
     footer: {
       tagline: "Restaurante Oxalá",

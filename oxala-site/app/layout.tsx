@@ -49,11 +49,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ScrollToTop />
           <div className="relative flex min-h-screen flex-col">
             <Header />
+            <div className="fixed right-4 top-24 z-50 sm:right-6 lg:right-8">
+              <LanguageSelector size="sm" />
+            </div>
             <main className="flex-1 pt-28 pb-16">
               <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-end pb-4">
-                  <LanguageSelector size="sm" />
-                </div>
                 {children}
               </div>
             </main>

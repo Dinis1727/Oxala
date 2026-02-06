@@ -44,7 +44,7 @@ export default function LanguageSelector({ size = "md" }: Props) {
     <div ref={ref} className="relative inline-flex items-center">
       <div
         className={clsx(
-          "inline-flex items-center rounded-full border border-white/15 font-semibold uppercase text-white/80 transition",
+          "inline-flex items-center rounded-full border border-white/15 bg-[#0e0b09]/85 font-semibold uppercase text-white/80 transition",
           pillHeight,
           pillPadding,
           tracking
@@ -87,7 +87,7 @@ export default function LanguageSelector({ size = "md" }: Props) {
           aria-haspopup="listbox"
           aria-expanded={open}
           className={clsx(
-            "ml-2 inline-flex items-center justify-center text-white/80 transition hover:text-brand-gold",
+            "ml-0 inline-flex items-center justify-center text-white/80 transition hover:text-brand-gold",
             arrowSize
           )}
         >

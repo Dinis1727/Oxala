@@ -97,10 +97,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     menu: {
       introTag: "A nossa cozinha",
-      introTitle: "Ementa do Oxalá",
+      introTitle: "EMENTA",
       introDescription:
         "A seleção de pratos do Oxalá é cuidadosamente elaborada para proporcionar uma experiência gastronómica única.",
-      categoryLabel: "Categoria",
+      categoryLabel: "Categorias",
       fishNote: "Guarnecidos com batata, legumes e salada | pratos individuais sob consulta",
       meatNote: "Guarnecidos com batata, arroz e salada | pratos individuais sob consulta",
       winesButton: "Ver carta de vinhos",
@@ -184,10 +184,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     menu: {
       introTag: "Our kitchen",
-      introTitle: "Oxalá Menu",
+      introTitle: "MENU",
       introDescription:
         "Oxalá’s selection of dishes is carefully curated to deliver a unique gastronomic experience.",
-      categoryLabel: "Category",
+      categoryLabel: "Categories",
       fishNote: "Served with potatoes, vegetables and salad | individual portions on request",
       meatNote: "Served with potatoes, rice and salad | individual portions on request",
       winesButton: "View wine list",
@@ -272,10 +272,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     menu: {
       introTag: "Notre cuisine",
-      introTitle: "Menu d’Oxalá",
+      introTitle: "MENU",
       introDescription:
         "La sélection de plats d’Oxalá est soigneusement élaborée pour offrir une expérience gastronomique unique.",
-      categoryLabel: "Catégorie",
+      categoryLabel: "Catégories",
       fishNote: "Servis avec pommes de terre, légumes et salade | plats individuels sur demande",
       meatNote: "Servis avec pommes de terre, riz et salade | plats individuels sur demande",
       winesButton: "Voir la carte des vins",
@@ -361,10 +361,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     menu: {
       introTag: "Nuestra cocina",
-      introTitle: "Menú de Oxalá",
+      introTitle: "MENÚ",
       introDescription:
         "La selección de platos de Oxalá está cuidadosamente elaborada para ofrecer una experiencia gastronómica única.",
-      categoryLabel: "Categoría",
+      categoryLabel: "Categorías",
       fishNote: "Acompañados con patata, verduras y ensalada | platos individuales bajo consulta",
       meatNote: "Acompañados con patata, arroz y ensalada | platos individuales bajo consulta",
       winesButton: "Ver carta de vinos",

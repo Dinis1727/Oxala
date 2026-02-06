@@ -39,6 +39,17 @@ type TranslationShape = {
   home: {
     heroTitle: string;
     heroDescription: string;
+    highlightLine1: string;
+    highlightLine2: string;
+    visitTitle: string;
+    visitLine1: string;
+    visitLine2: string;
+    reservationsTitle: string;
+    reservationsLine1: string;
+    reservationsLine2: string;
+    socialsTitle: string;
+    instagramLabel: string;
+    facebookLabel: string;
   };
   footer: {
     tagline: string;
@@ -102,6 +113,17 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       heroTitle: "Restaurante Oxalá",
       heroDescription:
         "Seja bem-vindo ao Restaurante Oxalá, onde o sabor do mar encontra a tradição e a elegância à mesa. Convidamo-lo a descobrir a nossa ementa e carta de vinhos.",
+      highlightLine1: "A melhor experiência",
+      highlightLine2: "gastronómica em Ovar.",
+      visitTitle: "Visite-nos",
+      visitLine1: "R. Família Colares Pinto 1695",
+      visitLine2: "3880-163 Ovar",
+      reservationsTitle: "Reservas",
+      reservationsLine1: "256 591 371",
+      reservationsLine2: "962 076 410",
+      socialsTitle: "Redes sociais",
+      instagramLabel: "@restauranteoxalaovar",
+      facebookLabel: "@oxalarestaurante",
     },
     footer: {
       tagline: "Restaurante Oxalá",
@@ -178,6 +200,17 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       heroTitle: "Oxalá Restaurant",
       heroDescription:
         "Atlantic-inspired cuisine in Ovar, presented in an elegant, always up-to-date digital menu.",
+      highlightLine1: "The finest experience",
+      highlightLine2: "of gastronomy in Ovar.",
+      visitTitle: "Visit us",
+      visitLine1: "R. Família Colares Pinto 1695",
+      visitLine2: "3880-163 Ovar",
+      reservationsTitle: "Reservations",
+      reservationsLine1: "256 591 371",
+      reservationsLine2: "962 076 410",
+      socialsTitle: "Social media",
+      instagramLabel: "@restauranteoxalaovar",
+      facebookLabel: "@oxalarestaurante",
       ctaMenu: "View menu",
       ctaWines: "View wine list",
     },
@@ -255,6 +288,17 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       heroTitle: "Restaurant Oxalá",
       heroDescription:
         "Cuisine inspirée de l’Atlantique à Ovar, présentée dans une carte digitale élégante et toujours à jour.",
+      highlightLine1: "La meilleure expérience",
+      highlightLine2: "gastronomique à Ovar.",
+      visitTitle: "Rendez-nous visite",
+      visitLine1: "R. Família Colares Pinto 1695",
+      visitLine2: "3880-163 Ovar",
+      reservationsTitle: "Réservations",
+      reservationsLine1: "256 591 371",
+      reservationsLine2: "962 076 410",
+      socialsTitle: "Réseaux sociaux",
+      instagramLabel: "@restauranteoxalaovar",
+      facebookLabel: "@oxalarestaurante",
       ctaMenu: "Voir la carte",
       ctaWines: "Voir la carte des vins",
     },
@@ -333,6 +377,17 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       heroTitle: "Restaurante Oxalá",
       heroDescription:
         "Cocina inspirada en el Atlántico en Ovar, presentada en un menú digital elegante y siempre actualizado.",
+      highlightLine1: "La mejor experiencia",
+      highlightLine2: "gastronómica en Ovar.",
+      visitTitle: "Visítanos",
+      visitLine1: "R. Família Colares Pinto 1695",
+      visitLine2: "3880-163 Ovar",
+      reservationsTitle: "Reservas",
+      reservationsLine1: "256 591 371",
+      reservationsLine2: "962 076 410",
+      socialsTitle: "Redes sociales",
+      instagramLabel: "@restauranteoxalaovar",
+      facebookLabel: "@oxalarestaurante",
       ctaMenu: "Ver menú",
       ctaWines: "Ver carta de vinos",
     },

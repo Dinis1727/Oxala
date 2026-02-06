@@ -24,6 +24,11 @@ const maisonNeue = localFont({
   variable: "--font-maison",
   display: "swap",
 });
+const bigCaslon = localFont({
+  src: [{ path: "./fonts/fonnts.com-Big_Caslon_CC_Italic.otf", weight: "400", style: "italic" }],
+  variable: "--font-big-caslon",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Restaurante Oxalá",
@@ -37,12 +42,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={initialLanguage}>
-      <body className={`${manrope.variable} ${cormorant.variable} ${maisonNeue.variable} text-brand-ink antialiased`}>
+      <body
+        className={`${manrope.variable} ${cormorant.variable} ${maisonNeue.variable} ${bigCaslon.variable} text-brand-ink antialiased`}
+      >
         <LanguageProvider initialLanguage={initialLanguage}>
           <ScrollToTop />
           <div className="relative flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1 pt-28 pb-16 backdrop-blur-xl">
+            <main className="flex-1 pt-28 pb-16">
               <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-end pb-4">
                   <LanguageSelector size="sm" />

@@ -20,7 +20,7 @@ export default function Header() {
       <div className="mx-auto flex min-h-[76px] max-w-5xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:max-w-6xl lg:px-8">
         <Link
           href="/"
-          className="group flex flex-col items-start rounded-full bg-white/5 px-4 py-2 shadow-[0_12px_26px_rgba(0,0,0,0.25)] transition hover:-translate-y-0.5 hover:bg-white/10"
+          className="group flex flex-col items-start rounded-full bg-transparent px-4 py-2 transition hover:-translate-y-0.5 hover:bg-transparent"
         >
           <span className="font-maison text-lg font-semibold uppercase tracking-[0.32em] text-brand-gold drop-shadow-sm transition group-hover:text-white sm:text-[1.5rem]">
             OXALÁ

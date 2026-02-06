@@ -6,12 +6,12 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const socialLinks = [
   {
     href: "https://www.instagram.com/restauranteoxalaovar/",
-    label: "Instagram",
+    label: "@restauranteoxalaovar",
     icon: <LuInstagram className="h-4 w-4" aria-hidden />,
   },
   {
     href: "https://www.facebook.com/oxalarestaurante",
-    label: "Facebook",
+    label: "@oxalarestaurante",
     icon: <LuFacebook className="h-4 w-4" aria-hidden />,
   },
 ];
@@ -26,8 +26,8 @@ export default function Footer() {
   const t = translations.footer;
 
   return (
-    <footer className="border-t border-white/10 bg-gradient-to-b from-[#0d0b0a] via-[#0f0c0b] to-[#0c0a09] text-white">
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-4 py-10 text-sm text-white/70 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-[1fr_0.8fr_0.8fr_0.8fr] lg:px-6 xl:px-8">
+    <footer className="font-maison font-light border-t border-white/10 bg-gradient-to-b from-[#0d0b0a] via-[#0f0c0b] to-[#0c0a09] text-white">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-4 py-10 text-sm text-white/70 sm:grid-cols-2 md:grid-cols-[1fr_0.9fr_0.6fr_0.9fr] lg:grid-cols-[1fr_0.9fr_0.6fr_0.9fr] lg:px-6 xl:px-8">
         <div className="space-y-5">
           <p className="text-xs uppercase tracking-[0.35em] text-brand-gold">{t.tagline}</p>
           <p className="h-display text-lg text-white/90">{t.description}</p>
@@ -39,7 +39,7 @@ export default function Footer() {
           <p className="text-white/80">3880-163 Ovar</p>
         </div>
 
-        <div className="space-y-0">
+        <div className="w-fit space-y-0">
           <p className="text-xs font-semibold uppercase tracking-widest text-white/50">{t.reservations}</p>
           <p className="text-white/80">256 591 371</p>
           <p className="text-white/80">962 076 410</p>
@@ -47,14 +47,14 @@ export default function Footer() {
 
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-widest text-white/50">{t.socials}</p>
-          <div className="flex w-full max-w-[130px] flex-col gap-1.5 sm:max-w-[120px]">
+          <div className="flex flex-col items-start gap-1.5">
             {socialLinks.map((social) => (
               <a
                 key={social.href}
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.25 text-[0.85rem] font-semibold text-white/85 transition hover:border-brand-gold hover:text-brand-gold sm:text-sm"
+                className="inline-flex w-fit items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-center text-[0.85rem] font-semibold leading-none text-white/85 transition hover:border-brand-gold hover:text-brand-gold sm:text-sm"
               >
                 {social.icon}
                 {social.label}

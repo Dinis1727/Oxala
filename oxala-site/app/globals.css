@@ -7,8 +7,10 @@
   --font-manrope: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --font-cormorant: "Cormorant Garamond", "Garamond", "Times New Roman", serif;
   --font-maison: "Maison Neue", "MaisonNeue", var(--font-manrope);
+  --font-big-caslon: "Big Caslon", "Cormorant Garamond", "Times New Roman", serif;
 }
 
+html,
 body {
   font-family: var(--font-maison);
   color: theme("colors.brand.ink");
@@ -17,9 +19,11 @@ body {
     radial-gradient(circle at 82% 8%, rgba(200, 164, 107, 0.14), transparent 32%),
     linear-gradient(145deg, #0d0a08 0%, #14100c 55%, #0e0b08 100%);
   min-height: 100vh;
+  overscroll-behavior-y: none;
 }
 .h-display { font-family: var(--font-maison); }
 .font-maison { font-family: var(--font-maison); }
+.font-big-caslon { font-family: var(--font-big-caslon); }
 
 ::selection {
   background: theme("colors.brand.gold");

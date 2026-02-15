@@ -20,7 +20,9 @@ type FilterModalProps = {
     typeLabel: string;
     regionLabel: string;
     yearLabel: string;
-    allLabel: string;
+    allTypeLabel: string;
+    allRegionLabel: string;
+    allYearLabel: string;
     closeLabel: string;
     applyLabel: string;
     clearLabel: string;
@@ -92,14 +94,14 @@ export default function FilterModal({
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex min-h-[70vh] h-[92vh] max-h-[92vh] w-[min(88vw,560px)] max-w-full flex-col overflow-hidden rounded-t-[28px] border border-brand-line/60 bg-white text-brand-ink shadow-[0_30px_90px_rgba(0,0,0,0.45)] sm:w-[min(84vw,560px)] sm:min-h-[70vh] sm:h-[90vh] sm:max-h-[90vh] md:w-[min(78vw,560px)] md:min-h-[70vh] md:h-[88vh] md:max-h-[88vh] lg:w-[480px] lg:min-h-[70vh] lg:h-[92vh] lg:max-h-[92vh] sm:rounded-none sm:border-l sm:border-t-0 sm:border-b-0">
+        <div className="flex h-screen max-h-screen w-full max-w-full flex-col overflow-hidden rounded-t-[28px] border border-brand-line/60 bg-white text-brand-ink shadow-[0_30px_90px_rgba(0,0,0,0.45)] font-maison uppercase sm:w-[min(70vw,820px)] md:w-[min(70vw,820px)] lg:w-[min(70vw,820px)] sm:rounded-none sm:border-l sm:border-t-0 sm:border-b-0 sm:ml-auto">
         <header className="flex items-center justify-between border-b border-brand-line/50 px-5 py-4">
           <div>
             <p className="text-[0.65rem] uppercase tracking-[0.35em] text-brand-smoke">{labels.filtersTitle}</p>
             <h3 className="text-lg font-semibold text-brand-ink">{labels.refineTitle}</h3>
           </div>
-          <button
-            aria-label={labels.closeLabel}
+            <button
+              aria-label={labels.closeLabel}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-ink/5 text-lg font-semibold text-brand-ink transition hover:scale-105"
             onClick={handleClose}
           >
@@ -131,7 +133,9 @@ export default function FilterModal({
                       </svg>
                     )}
                   </span>
-                  <span className="truncate text-sm text-brand-ink">{type === "__all" ? labels.allLabel : type}</span>
+                  <span className="truncate text-sm text-brand-ink">
+                    {type === "__all" ? labels.allTypeLabel : type}
+                  </span>
                 </label>
               ))}
             </div>
@@ -160,7 +164,9 @@ export default function FilterModal({
                       </svg>
                     )}
                   </span>
-                  <span className="text-sm text-brand-ink">{region === "__all" ? labels.allLabel : region}</span>
+                  <span className="text-sm text-brand-ink">
+                    {region === "__all" ? labels.allRegionLabel : region}
+                  </span>
                 </label>
               ))}
             </div>
@@ -189,7 +195,9 @@ export default function FilterModal({
                       </svg>
                     )}
                   </span>
-                  <span className="text-sm text-brand-ink">{year === "__all" ? labels.allLabel : year}</span>
+                  <span className="text-sm text-brand-ink">
+                    {year === "__all" ? labels.allYearLabel : year}
+                  </span>
                 </label>
               ))}
             </div>

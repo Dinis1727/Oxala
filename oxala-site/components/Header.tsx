@@ -16,12 +16,13 @@ export default function Header() {
   ];
 
   const isEmenta = pathname?.startsWith("/ementa");
+  const isVinhos = pathname?.startsWith("/vinhos");
 
   return (
     <header
       className={clsx(
         "fixed inset-x-0 top-0 z-50 border-b border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.45)]",
-        isEmenta ? "bg-[#0e0b09]/95" : "bg-[#0e0b09]/85"
+        isEmenta || isVinhos ? "bg-[#0e0b09]/95" : "bg-[#0e0b09]/85"
       )}
     >
       <div className="mx-auto flex min-h-[76px] max-w-5xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:max-w-6xl lg:px-8">

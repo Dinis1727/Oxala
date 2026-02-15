@@ -50,6 +50,8 @@ type TranslationShape = {
     socialsTitle: string;
     instagramLabel: string;
     facebookLabel: string;
+    ctaMenu: string;
+    ctaWines: string;
   };
   footer: {
     tagline: string;
@@ -61,6 +63,7 @@ type TranslationShape = {
   };
   vinhos: {
     title: string;
+    introTag: string;
     description: string;
     bottleSizeLabel: string;
     alcoholContentLabel: string;
@@ -74,7 +77,9 @@ type TranslationShape = {
     searchLabel: string;
     filters: {
       title: string;
-      all: string;
+      allType: string;
+      allRegion: string;
+      allYear: string;
       region: string;
       type: string;
       apply: string;
@@ -124,6 +129,8 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       socialsTitle: "Redes sociais",
       instagramLabel: "@restauranteoxalaovar",
       facebookLabel: "@oxalarestaurante",
+      ctaMenu: "Ver ementa",
+      ctaWines: "Ver carta de vinhos",
     },
     footer: {
       tagline: "Restaurante Oxalá",
@@ -135,6 +142,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     vinhos: {
       title: "Carta de Vinhos",
+      introTag: "A nossa garrafeira",
       description:
         "A seleção de vinhos do Oxalá diretamente da maior garrafeira nacional para complementar a sua refeição.",
       bottleSizeLabel: "Tamanho da garrafa",
@@ -149,7 +157,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       searchLabel: "Pesquisar",
       filters: {
         title: "Filtrar",
-        all: "Todas",
+        allType: "Todos",
+        allRegion: "Todas",
+        allYear: "Todos",
         region: "Região",
         type: "Tipo",
         apply: "Ver vinhos",
@@ -224,6 +234,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     vinhos: {
       title: "Wine List",
+      introTag: "Our cellar",
       description: "Oxalá’s wine selection curated from the largest national cellar to pair with your meal.",
       bottleSizeLabel: "Bottle size",
       alcoholContentLabel: "Alcohol by volume (% ABV)",
@@ -237,7 +248,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       searchLabel: "Search",
       filters: {
         title: "Filter",
-        all: "All",
+        allType: "All",
+        allRegion: "All",
+        allYear: "All",
         region: "Region",
         type: "Type",
         apply: "View wines",
@@ -312,6 +325,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     vinhos: {
       title: "Carte des vins",
+      introTag: "Notre cave",
       description:
         "La sélection de vins d’Oxalá, directement de la plus grande cave nationale, pour accompagner votre repas.",
       bottleSizeLabel: "Taille de la bouteille",
@@ -326,7 +340,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       searchLabel: "Rechercher",
       filters: {
         title: "Filtrer",
-        all: "Toutes",
+        allType: "Tous",
+        allRegion: "Toutes",
+        allYear: "Tous",
         region: "Région",
         type: "Type",
         apply: "Voir les vins",
@@ -401,6 +417,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     },
     vinhos: {
       title: "Carta de vinos",
+      introTag: "Nuestra bodega",
       description:
         "La selección de vinos de Oxalá directamente de la mayor bodega nacional para acompañar tu comida.",
       bottleSizeLabel: "Tamaño de la botella",
@@ -415,7 +432,9 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       searchLabel: "Buscar",
       filters: {
         title: "Filtrar",
-        all: "Todas",
+        allType: "Todos",
+        allRegion: "Todas",
+        allYear: "Todos",
         region: "Región",
         type: "Tipo",
         apply: "Ver vinos",

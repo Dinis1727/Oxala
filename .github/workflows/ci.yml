@@ -1,16 +1,30 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
+    paths:
+      - "oxala-site/**"
+      - "sanity/**"
+      - ".github/workflows/ci.yml"
   pull_request:
     branches: [main]
+    paths:
+      - "oxala-site/**"
+      - "sanity/**"
+      - ".github/workflows/ci.yml"
 
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lint-and-build:
+  site-lint-build:
+    name: Site lint + build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -40,3 +54,26 @@ jobs:
         run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: 1
+
+  sanity-build:
+    name: Sanity build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sanity
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: sanity/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build

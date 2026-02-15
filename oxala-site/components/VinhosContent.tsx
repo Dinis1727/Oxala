@@ -188,12 +188,13 @@ export default function VinhosContent({ vinhos }: Props) {
   };
 
   return (
-    <section className="min-h-[92vh] overflow-hidden rounded-[28px] border border-brand-line/60 bg-gradient-to-br from-[#faf4e7]/80 via-[#f4e7d4]/78 to-[#e7dcc6]/78 px-4 py-8 shadow-[0_26px_70px_rgba(0,0,0,0.16)] backdrop-blur-sm sm:px-6 md:px-8">
-      <div ref={topSentinelRef} aria-hidden className="h-px w-full" />
-      <div ref={topSentinelRef} aria-hidden className="h-px w-full" />
-      <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <p className="text-[0.62rem] uppercase tracking-[0.45em] text-brand-smoke">{t.title}</p>
-        <h1 className="h-display mt-3 text-2xl text-brand-ink sm:text-3xl">{t.description}</h1>
+    <section className="min-h-[92vh] overflow-hidden px-4 py-8 sm:px-6 md:px-8">
+      <div className="w-full text-left">
+        <p className="text-[0.65rem] uppercase tracking-[0.5em] text-brand-smoke">{t.introTag}</p>
+        <h2 className="mt-3 h-display text-4xl uppercase tracking-[0.18em] text-brand-ink sm:text-5xl">
+          {t.title}
+        </h2>
+        <p className="mt-4 text-base text-brand-ink/75 sm:text-lg">{t.description}</p>
       </div>
 
       <div className="mt-8 flex flex-col gap-3 text-sm text-brand-ink/80 md:flex-row md:flex-nowrap md:items-center md:gap-3 md:overflow-x-auto md:pb-1">
@@ -227,10 +228,10 @@ export default function VinhosContent({ vinhos }: Props) {
           {filteredVinhos.map((vinho) => (
             <article
               key={vinho._id}
-              className="group relative overflow-hidden rounded-2xl border border-brand-line/70 bg-white/75 shadow-[0_14px_35px_rgba(0,0,0,0.12)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.16)]"
+              className="group relative overflow-hidden rounded-t-[999px] rounded-b-2xl border border-brand-line/70 bg-white/75 shadow-[0_14px_35px_rgba(0,0,0,0.12)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.16)]"
               onClick={() => setSelected(vinho)}
             >
-              <div className="relative h-44 w-full overflow-hidden">
+              <div className="relative h-52 w-full overflow-hidden sm:h-60 lg:h-64">
                 {vinho.imagemUrl ? (
                   <Image
                     src={vinho.imagemUrl}
@@ -367,7 +368,9 @@ export default function VinhosContent({ vinhos }: Props) {
           typeLabel: t.filters.type,
           regionLabel: t.filters.region,
           yearLabel: t.yearLabel,
-          allLabel: t.filters.all,
+          allTypeLabel: t.filters.allType,
+          allRegionLabel: t.filters.allRegion,
+          allYearLabel: t.filters.allYear,
           closeLabel: t.closeLabel,
           applyLabel: t.filters.apply,
           clearLabel: t.filters.clear,

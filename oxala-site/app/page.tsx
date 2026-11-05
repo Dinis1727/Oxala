@@ -1,94 +1,205 @@
 import { cookies } from "next/headers";
+import Image from "next/image";
 import Link from "next/link";
-import { LuFacebook, LuInstagram } from "react-icons/lu";
-import { LANGUAGE_COOKIE, defaultLanguage, isLanguageCode, LanguageCode, translations } from "@/lib/i18n";
-
-async function resolveLanguage(): Promise<LanguageCode> {
-  const cookieLang = (await cookies()).get(LANGUAGE_COOKIE)?.value;
-  return isLanguageCode(cookieLang) ? cookieLang : defaultLanguage;
-}
+import {
+  LuArrowDown,
+  LuArrowUpRight,
+  LuMapPin,
+  LuPhone,
+  LuMail,
+  LuInstagram,
+} from "react-icons/lu";
+import {
+  LANGUAGE_COOKIE,
+  defaultLanguage,
+  isLanguageCode,
+  translations,
+} from "@/lib/i18n";
+import { designCopy } from "@/lib/design-copy";
+import { restaurant } from "@/lib/restaurant";
 
 export default async function Home() {
-  const language = await resolveLanguage();
+  const cookieLang = (await cookies()).get(LANGUAGE_COOKIE)?.value;
+  const language = isLanguageCode(cookieLang) ? cookieLang : defaultLanguage;
   const t = translations[language];
-
+  const copy = designCopy[language];
   return (
     <>
-      <section className="relative isolate overflow-hidden rounded-[36px] bg-transparent">
-        <div className="relative mx-auto max-w-5xl px-4 pt-6 sm:px-6 md:px-10">
-          <div className="relative overflow-hidden rounded-[32px] shadow-none">
-            <div
-              className="aspect-[4/3] w-full bg-cover bg-center brightness-105 saturate-110"
-              style={{ backgroundImage: "url('/hero-bg.png')" }}
-            />
+      <section className="home-hero site-width">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            <span />
+            {copy.eyebrow}
+          </p>
+          <h1>
+            {copy.title}
+            <em>{copy.titleAccent}</em>
+          </h1>
+          <p className="hero-description">{copy.menuDescription}</p>
+          <div className="hero-actions">
+            <Link href="/ementa" className="button button-gold">
+              {t.home.ctaMenu}
+              <LuArrowUpRight aria-hidden />
+            </Link>
+            <Link href="/vinhos" className="text-link">
+              {t.home.ctaWines}
+              <LuArrowUpRight aria-hidden />
+            </Link>
+          </div>
+          <a href="#descobrir" className="discover-link">
+            <LuArrowDown aria-hidden />
+            {copy.discover}
+          </a>
+        </div>
+        <div className="hero-visual">
+          <Image
+            src="/hero-bg.png"
+            alt={t.home.heroTitle}
+            fill
+            priority
+            sizes="(max-width: 760px) 100vw, 54vw"
+          />
+          <span className="hero-visual-caption">OXALÁ · OVAR</span>
+        </div>
+      </section>
+
+      <section id="descobrir" className="discovery-section">
+        <div className="site-width">
+          <div className="section-intro">
+            <p className="eyebrow">{t.home.heroTitle}</p>
+            <h2>
+              {t.home.highlightLine1}
+              <em>{t.home.highlightLine2}</em>
+            </h2>
+            <p>{t.home.heroDescription}</p>
+          </div>
+          <div className="discovery-links">
+            <Link href="/ementa" className="discovery-item">
+              <span className="item-number">01</span>
+              <div>
+                <p className="eyebrow">{t.menu.introTag}</p>
+                <h3>{t.nav.menu}</h3>
+                <p>{t.menu.introDescription}</p>
+              </div>
+              <LuArrowUpRight aria-hidden />
+            </Link>
+            <Link href="/vinhos" className="discovery-item">
+              <span className="item-number">02</span>
+              <div>
+                <p className="eyebrow">{t.vinhos.introTag}</p>
+                <h3>{t.nav.wines}</h3>
+                <p>{copy.wineDescription}</p>
+              </div>
+              <LuArrowUpRight aria-hidden />
+            </Link>
           </div>
         </div>
       </section>
 
-      <div className="relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw] pt-6">
-        <div className="relative w-full overflow-hidden border-y border-white/10 bg-black/40">
-          <div
-            className="h-40 w-full bg-cover bg-center grayscale sm:h-48 md:h-56 lg:h-64"
-            style={{ backgroundImage: "url('/garrafas.jpg')" }}
-          />
-          <div className="absolute inset-0 bg-black/35" />
-          <div className="font-big-caslon absolute inset-0 mx-auto flex max-w-[16ch] items-center justify-center px-4 text-center text-2xl font-normal leading-tight text-white sm:max-w-[18ch] sm:text-3xl md:max-w-[22ch] md:text-4xl lg:text-5xl">
-            {t.home.highlightLine1}
-            <br />
-            {t.home.highlightLine2}
+      <section
+        className="atmosphere-section site-width"
+        aria-labelledby="atmosphere-heading"
+      >
+        <div className="atmosphere-heading">
+          <div>
+            <p className="eyebrow">{t.home.heroTitle}</p>
+            <h2 id="atmosphere-heading">{copy.galleryTitle}</h2>
           </div>
+          <a
+            href={restaurant.instagram}
+            target="_blank"
+            rel="noreferrer"
+            className="text-link"
+          >
+            <LuInstagram aria-hidden />
+            {copy.galleryLink}
+            <LuArrowUpRight aria-hidden />
+          </a>
         </div>
-      </div>
+        <div className="atmosphere-grid">
+          {[
+            { src: "/images/oxala/cozinha.jpg", caption: t.menu.introTag },
+            { src: "/images/oxala/garrafeira.jpg", caption: t.vinhos.introTag },
+            {
+              src: "/images/oxala/ambiente.jpg",
+              caption: copy.galleryAmbience,
+            },
+          ].map((photo) => (
+            <figure key={photo.src}>
+              <div className="atmosphere-photo">
+                <Image
+                  src={photo.src}
+                  alt={`${photo.caption} — ${t.home.heroTitle}`}
+                  fill
+                  sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 30vw, 424px"
+                />
+              </div>
+              <figcaption>{photo.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
 
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-start justify-center gap-12 px-6 pb-12 pt-10 text-left sm:px-8 md:max-w-5xl md:px-12 md:pb-16">
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <h1 className="h-display text-3xl text-[#f0e8d9] sm:text-4xl md:text-5xl">{t.home.heroTitle}</h1>
-            <p className="max-w-3xl text-justify text-[0.95rem] leading-relaxed text-white/75 sm:text-base md:text-lg">
-              {t.home.heroDescription}
-            </p>
-          </div>
+      <section className="cellar-banner">
+        <Image src="/garrafas.jpg" alt="" fill sizes="100vw" />
+        <div className="site-width cellar-content">
+          <p className="eyebrow">{t.vinhos.introTag}</p>
+          <h2>{copy.cellarTitle}</h2>
+          <p>{copy.cellarDescription}</p>
+          <Link href="/vinhos" className="button button-outline">
+            {t.home.ctaWines}
+            <LuArrowUpRight aria-hidden />
+          </Link>
         </div>
-        <div className="space-y-5">
-          <div className="space-y-4">
-            <h1 className="h-display text-3xl text-[#f0e8d9] sm:text-4xl md:text-5xl">{t.home.visitTitle}</h1>
-            <p className="max-w-3xl text-justify text-[0.95rem] leading-relaxed text-white/75 sm:text-base md:text-lg">
-              {t.home.visitLine1}, <br />
+      </section>
+
+      <section className="visit-section site-width">
+        <div>
+          <p className="eyebrow">{t.home.heroTitle}</p>
+          <h2>
+            {t.home.visitTitle}
+            <span className="gold-period">.</span>
+          </h2>
+        </div>
+        <div className="visit-info">
+          <LuMapPin aria-hidden />
+          <div>
+            <p className="eyebrow">OVAR, PORTUGAL</p>
+            <p>
+              {t.home.visitLine1}
+              <br />
               {t.home.visitLine2}
             </p>
+            <a
+              href={restaurant.directions}
+              target="_blank"
+              rel="noreferrer"
+              className="text-link"
+            >
+              {copy.visitLink}
+              <LuArrowUpRight aria-hidden />
+            </a>
           </div>
         </div>
-        <div className="space-y-5">
-          <div className="space-y-4">
-            <h1 className="h-display text-3xl text-[#f0e8d9] sm:text-4xl md:text-5xl">{t.home.reservationsTitle}</h1>
-            <p className="max-w-3xl text-justify text-[0.95rem] leading-relaxed text-white/75 sm:text-base md:text-lg">
-              {t.home.reservationsLine1} <br />
-              {t.home.reservationsLine2}
-            </p>
+        <div className="visit-info">
+          <LuPhone aria-hidden />
+          <div>
+            <p className="eyebrow">{t.home.reservationsTitle}</p>
+            {restaurant.phones.map((phone) => (
+              <a key={phone.href} href={phone.href}>
+                {phone.label}
+              </a>
+            ))}
           </div>
         </div>
-        <div className="space-y-5">
-          <div className="space-y-4">
-            <h1 className="h-display text-3xl text-[#f0e8d9] sm:text-4xl md:text-5xl">{t.home.socialsTitle}</h1>
-            <div className="flex flex-col items-start gap-1.5">
-              <Link
-                href="https://www.instagram.com/oxalarestaurante/"
-                className="inline-flex w-fit items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-center text-[0.85rem] font-semibold leading-none text-white/85 transition hover:border-brand-gold hover:text-brand-gold sm:text-sm"
-              >
-                <LuInstagram className="h-4 w-4" aria-hidden />
-                {t.home.instagramLabel}
-              </Link>
-              <Link
-                href="https://www.facebook.com/oxalarestaurante"
-                className="inline-flex w-fit items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-center text-[0.85rem] font-semibold leading-none text-white/85 transition hover:border-brand-gold hover:text-brand-gold sm:text-sm"
-              >
-                <LuFacebook className="h-4 w-4" aria-hidden />
-                {t.home.facebookLabel}
-              </Link>
-            </div>
+        <div className="visit-info visit-email">
+          <LuMail aria-hidden />
+          <div>
+            <p className="eyebrow">{copy.emailLabel}</p>
+            <a href={`mailto:${restaurant.email}`}>{restaurant.email}</a>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

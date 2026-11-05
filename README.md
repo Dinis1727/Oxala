@@ -7,13 +7,13 @@ Formal digital menu initiative for Restaurante Oxalá (Ovar). The project delive
 
 ## Run the site (Next.js)
 1. `cd oxala-site`
-2. `npm install`
-3. `npm run dev` and open http://localhost:3000
-4. Production build: `npm run build` then `npm start`
-5. Quality checks: `npm run lint`
+2. `pnpm install`
+3. `pnpm dev` and open http://localhost:3000
+4. Production build: `pnpm build` then `pnpm start`
+5. Quality checks: `pnpm lint`
 
 ## Run the Sanity Studio
 1. `cd sanity`
-2. `npm install`
-3. `npm run dev` and open http://localhost:3333 to manage content
-4. Optional Studio deploy: `npm run deploy`
+2. `pnpm install`
+3. `pnpm dev` and open http://localhost:3333 to manage content
+4. Optional Studio deploy: `pnpm deploy`

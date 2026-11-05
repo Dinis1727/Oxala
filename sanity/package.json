@@ -2,6 +2,10 @@
   "name": "oxala",
   "private": true,
   "version": "1.0.0",
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {

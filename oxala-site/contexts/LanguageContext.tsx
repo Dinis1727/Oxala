@@ -1,5 +1,12 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from "react";
 import { useRouter } from "next/navigation";
 import {
   defaultLanguage,
@@ -7,7 +14,6 @@ import {
   LanguageCode,
   translations,
   LANGUAGE_COOKIE,
-  isLanguageCode,
 } from "@/lib/i18n";
 
 type LanguageContextShape = {
@@ -19,30 +25,21 @@ type LanguageContextShape = {
 
 const STORAGE_KEY = "oxala-language";
 
-const LanguageContext = createContext<LanguageContextShape | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextShape | undefined>(
+  undefined,
+);
 
 type LanguageProviderProps = {
   children: React.ReactNode;
   initialLanguage?: LanguageCode;
 };
 
-export function LanguageProvider({ children, initialLanguage = defaultLanguage }: LanguageProviderProps) {
+export function LanguageProvider({
+  children,
+  initialLanguage = defaultLanguage,
+}: LanguageProviderProps) {
   const router = useRouter();
-  const getInitialLanguage = useCallback(
-    () => {
-      if (typeof window === "undefined") {
-        return initialLanguage;
-      }
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored && isLanguageCode(stored)) {
-        return stored;
-      }
-      return initialLanguage;
-    },
-    [initialLanguage]
-  );
-
-  const [language, setLanguageState] = useState<LanguageCode>(getInitialLanguage);
+  const [language, setLanguageState] = useState<LanguageCode>(initialLanguage);
 
   const persistLanguage = useCallback((lang: LanguageCode) => {
     if (typeof window === "undefined") {
@@ -56,6 +53,7 @@ export function LanguageProvider({ children, initialLanguage = defaultLanguage }
     if (typeof window === "undefined") {
       return;
     }
+    document.documentElement.lang = language;
     persistLanguage(language);
   }, [language, persistLanguage]);
 
@@ -68,7 +66,7 @@ export function LanguageProvider({ children, initialLanguage = defaultLanguage }
       setLanguageState(lang);
       router.refresh();
     },
-    [language, router, persistLanguage]
+    [language, router, persistLanguage],
   );
 
   const value = useMemo(
@@ -78,10 +76,14 @@ export function LanguageProvider({ children, initialLanguage = defaultLanguage }
       translations: translations[language],
       options: languageOptions,
     }),
-    [language, setLanguage]
+    [language, setLanguage],
   );
 
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+  return (
+    <LanguageContext.Provider value={value}>
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
 export function useLanguage() {

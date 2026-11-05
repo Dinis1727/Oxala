@@ -1,11 +1,22 @@
 export type LanguageCode = "pt" | "en" | "fr" | "es";
 
-export const languageOptions: Array<{ code: LanguageCode; label: string; shortLabel: string }> = [
+export const languageOptions: Array<{
+  code: LanguageCode;
+  label: string;
+  shortLabel: string;
+}> = [
   { code: "pt", label: "Português", shortLabel: "PT" },
   { code: "en", label: "English", shortLabel: "EN" },
   { code: "fr", label: "Français", shortLabel: "FR" },
   { code: "es", label: "Español", shortLabel: "ES" },
 ];
+
+export const languageLocales: Record<LanguageCode, string> = {
+  pt: "pt-PT",
+  en: "en-GB",
+  fr: "fr-FR",
+  es: "es-ES",
+};
 
 export const defaultLanguage: LanguageCode = "pt";
 export const LANGUAGE_COOKIE = "oxala-language";
@@ -106,8 +117,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       introDescription:
         "A seleção de pratos do Oxalá é cuidadosamente elaborada para proporcionar uma experiência gastronómica única.",
       categoryLabel: "Categorias",
-      fishNote: "Guarnecidos com batata, legumes e salada | pratos individuais sob consulta",
-      meatNote: "Guarnecidos com batata, arroz e salada | pratos individuais sob consulta",
+      fishNote:
+        "Guarnecidos com batata, legumes e salada | pratos individuais sob consulta",
+      meatNote:
+        "Guarnecidos com batata, arroz e salada | pratos individuais sob consulta",
       winesButton: "Ver carta de vinhos",
       taxLine1: "IVA incluído em todos os preços apresentados.",
       taxLine2:
@@ -125,7 +138,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       visitLine2: "3880-163 Ovar",
       reservationsTitle: "Reservas",
       reservationsLine1: "256 591 371",
-      reservationsLine2: "962 076 410",
+      reservationsLine2: "926 185 867",
       socialsTitle: "Redes sociais",
       instagramLabel: "@restauranteoxalaovar",
       facebookLabel: "@oxalarestaurante",
@@ -198,8 +211,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       introDescription:
         "Oxalá’s selection of dishes is carefully curated to deliver a unique gastronomic experience.",
       categoryLabel: "Categories",
-      fishNote: "Served with potatoes, vegetables and salad | individual portions on request",
-      meatNote: "Served with potatoes, rice and salad | individual portions on request",
+      fishNote:
+        "Served with potatoes, vegetables and salad | individual portions on request",
+      meatNote:
+        "Served with potatoes, rice and salad | individual portions on request",
       winesButton: "View wine list",
       taxLine1: "VAT included in all listed prices.",
       taxLine2:
@@ -209,7 +224,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     home: {
       heroTitle: "Oxalá Restaurant",
       heroDescription:
-        "Atlantic-inspired cuisine in Ovar, presented in an elegant, always up-to-date digital menu.",
+        "Welcome to Oxalá, where the flavours of the sea meet tradition and elegance at the table. Discover our menu and wine list.",
       highlightLine1: "The finest experience",
       highlightLine2: "of gastronomy in Ovar.",
       visitTitle: "Visit us",
@@ -217,7 +232,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       visitLine2: "3880-163 Ovar",
       reservationsTitle: "Reservations",
       reservationsLine1: "256 591 371",
-      reservationsLine2: "962 076 410",
+      reservationsLine2: "926 185 867",
       socialsTitle: "Social media",
       instagramLabel: "@restauranteoxalaovar",
       facebookLabel: "@oxalarestaurante",
@@ -235,7 +250,8 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     vinhos: {
       title: "Wine List",
       introTag: "Our cellar",
-      description: "Oxalá’s wine selection curated from the largest national cellar to pair with your meal.",
+      description:
+        "Oxalá’s wine selection curated from the largest national cellar to pair with your meal.",
       bottleSizeLabel: "Bottle size",
       alcoholContentLabel: "Alcohol by volume (% ABV)",
       yearLabel: "Vintage year",
@@ -289,8 +305,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       introDescription:
         "La sélection de plats d’Oxalá est soigneusement élaborée pour offrir une expérience gastronomique unique.",
       categoryLabel: "Catégories",
-      fishNote: "Servis avec pommes de terre, légumes et salade | plats individuels sur demande",
-      meatNote: "Servis avec pommes de terre, riz et salade | plats individuels sur demande",
+      fishNote:
+        "Servis avec pommes de terre, légumes et salade | plats individuels sur demande",
+      meatNote:
+        "Servis avec pommes de terre, riz et salade | plats individuels sur demande",
       winesButton: "Voir la carte des vins",
       taxLine1: "TVA incluse dans tous les prix affichés.",
       taxLine2:
@@ -300,7 +318,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     home: {
       heroTitle: "Restaurant Oxalá",
       heroDescription:
-        "Cuisine inspirée de l’Atlantique à Ovar, présentée dans une carte digitale élégante et toujours à jour.",
+        "Bienvenue chez Oxalá, où les saveurs de la mer rencontrent la tradition et l’élégance à table. Découvrez notre carte et nos vins.",
       highlightLine1: "La meilleure expérience",
       highlightLine2: "gastronomique à Ovar.",
       visitTitle: "Rendez-nous visite",
@@ -308,7 +326,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       visitLine2: "3880-163 Ovar",
       reservationsTitle: "Réservations",
       reservationsLine1: "256 591 371",
-      reservationsLine2: "962 076 410",
+      reservationsLine2: "926 185 867",
       socialsTitle: "Réseaux sociaux",
       instagramLabel: "@restauranteoxalaovar",
       facebookLabel: "@oxalarestaurante",
@@ -381,8 +399,10 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       introDescription:
         "La selección de platos de Oxalá está cuidadosamente elaborada para ofrecer una experiencia gastronómica única.",
       categoryLabel: "Categorías",
-      fishNote: "Acompañados con patata, verduras y ensalada | platos individuales bajo consulta",
-      meatNote: "Acompañados con patata, arroz y ensalada | platos individuales bajo consulta",
+      fishNote:
+        "Acompañados con patata, verduras y ensalada | platos individuales bajo consulta",
+      meatNote:
+        "Acompañados con patata, arroz y ensalada | platos individuales bajo consulta",
       winesButton: "Ver carta de vinos",
       taxLine1: "IVA incluido en todos los precios presentados.",
       taxLine2:
@@ -392,7 +412,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
     home: {
       heroTitle: "Restaurante Oxalá",
       heroDescription:
-        "Cocina inspirada en el Atlántico en Ovar, presentada en un menú digital elegante y siempre actualizado.",
+        "Bienvenido a Oxalá, donde el sabor del mar se encuentra con la tradición y la elegancia en la mesa. Descubre nuestro menú y carta de vinos.",
       highlightLine1: "La mejor experiencia",
       highlightLine2: "gastronómica en Ovar.",
       visitTitle: "Visítanos",
@@ -400,7 +420,7 @@ export const translations: Record<LanguageCode, TranslationShape> = {
       visitLine2: "3880-163 Ovar",
       reservationsTitle: "Reservas",
       reservationsLine1: "256 591 371",
-      reservationsLine2: "962 076 410",
+      reservationsLine2: "926 185 867",
       socialsTitle: "Redes sociales",
       instagramLabel: "@restauranteoxalaovar",
       facebookLabel: "@oxalarestaurante",

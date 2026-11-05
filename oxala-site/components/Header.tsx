@@ -1,112 +1,119 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
+import { LuArrowUpRight, LuMenu, LuX } from "react-icons/lu";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { designCopy } from "@/lib/design-copy";
+import LanguageSelector from "@/components/LanguageSelector";
+import SeahorseMark from "@/components/SeahorseMark";
+import { restaurant } from "@/lib/restaurant";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { translations } = useLanguage();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const { language, translations: t } = useLanguage();
+  const copy = designCopy[language];
   const nav = [
-    { href: "/", label: translations.nav.home },
-    { href: "/ementa", label: translations.nav.menu },
-    { href: "/vinhos", label: translations.nav.wines },
+    { href: "/", label: t.nav.home },
+    { href: "/ementa", label: t.nav.menu },
+    { href: "/vinhos", label: t.nav.wines },
   ];
 
-  const isEmenta = pathname?.startsWith("/ementa");
-  const isVinhos = pathname?.startsWith("/vinhos");
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [open]);
 
   return (
-    <header
-      className={clsx(
-        "fixed inset-x-0 top-0 z-50 border-b border-white/10 shadow-[0_18px_40px_rgba(0,0,0,0.45)]",
-        isEmenta || isVinhos ? "bg-[#0e0b09]/95" : "bg-[#0e0b09]/85"
-      )}
-    >
-      <div className="mx-auto flex min-h-[76px] max-w-5xl flex-wrap items-center justify-between gap-3 px-4 sm:px-6 lg:max-w-6xl lg:px-8">
+    <header className="site-header">
+      <a className="skip-link" href="#main-content">
+        {copy.skip}
+      </a>
+      <div className="header-inner site-width">
         <Link
           href="/"
-          className="group flex flex-col items-start rounded-full bg-transparent px-4 py-2 transition hover:-translate-y-0.5 hover:bg-transparent"
+          scroll={pathname !== "/"}
+          className="header-brand"
+          aria-label={t.home.heroTitle}
+          onClick={(event) => {
+            setOpen(false);
+            if (
+              pathname === "/" &&
+              !event.metaKey &&
+              !event.ctrlKey &&
+              !event.shiftKey &&
+              !event.altKey
+            ) {
+              window.scrollTo({ top: 0, behavior: "instant" });
+            }
+          }}
         >
-          <span className="font-maison text-lg font-semibold uppercase tracking-[0.32em] text-brand-gold drop-shadow-sm transition group-hover:text-white sm:text-[1.5rem]">
-            OXALÁ
+          <SeahorseMark />
+          <span className="wordmark" aria-hidden="true">
+            <span>OXALÁ</span>
+            <small>RESTAURANTE · OVAR</small>
           </span>
-          <span className="text-[0.55rem] uppercase tracking-[0.4em] text-white/55 sm:text-[0.6rem]">Restaurante</span>
         </Link>
-
-        {/* desktop */}
-        <nav className="hidden flex-wrap items-center gap-5 text-[0.8rem] font-light uppercase tracking-[0.2em] text-white/70 md:ml-auto md:flex lg:gap-7 lg:text-[0.82rem]">
-          {nav.map((i) => (
+        <nav className="desktop-nav" aria-label={t.header.menuToggle}>
+          {nav.map((item) => (
             <Link
-              key={i.href}
-              href={i.href}
-              className={clsx(
-                "relative pb-1 transition hover:text-brand-gold",
-                pathname === i.href
-                  ? "text-brand-gold after:absolute after:-bottom-[2px] after:left-0 after:h-[1px] after:w-full after:bg-brand-gold"
-                  : "text-white/65"
-              )}
+              key={item.href}
+              href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
             >
-              {i.label}
+              {item.label}
             </Link>
           ))}
         </nav>
-
-        <div className="flex items-center gap-3 md:gap-2">
-          {/* mobile toggle */}
+        <div className="header-actions">
+          <LanguageSelector />
+          <a href={restaurant.phones[0].href} className="reservation-link">
+            {t.home.reservationsTitle}
+            <LuArrowUpRight aria-hidden />
+          </a>
           <button
+            ref={toggleRef}
+            type="button"
+            className="menu-toggle"
+            aria-label={open ? copy.closeMenu : t.header.menuToggle}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
             onClick={() => setOpen(!open)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:border-brand-gold/60 hover:text-brand-gold md:hidden"
-            aria-label={translations.header.menuToggle}
           >
-            <div className="flex h-5 w-6 flex-col justify-between">
-              <span
-                className={clsx(
-                  "block h-0.5 w-full origin-center bg-current transition-transform duration-300 transform",
-                  open ? "translate-y-1.5 rotate-45" : ""
-                )}
-              />
-              <span
-                className={clsx(
-                  "block h-0.5 w-full bg-current transition-opacity duration-300",
-                  open ? "opacity-0" : "opacity-100"
-                )}
-              />
-              <span
-                className={clsx(
-                  "block h-0.5 w-full origin-center bg-current transition-transform duration-300 transform",
-                  open ? "-translate-y-1.5 -rotate-45" : ""
-                )}
-              />
-            </div>
+            {open ? <LuX aria-hidden /> : <LuMenu aria-hidden />}
           </button>
         </div>
       </div>
-
-      {/* mobile drawer */}
-      {open && (
-        <div className="border-t border-white/10 bg-[#0f0c0a]/95 text-white shadow-inner md:hidden">
-          <nav className="mx-auto flex max-w-6xl flex-col gap-1 container-px py-4">
-            {nav.map((i) => (
-              <Link
-                key={i.href}
-                href={i.href}
-                onClick={() => setOpen(false)}
-                className={clsx(
-                  "rounded-lg px-2 py-2.5 text-sm font-light uppercase tracking-[0.18em] transition",
-                  pathname === i.href
-                    ? "bg-brand-gold/15 text-brand-gold"
-                    : "text-white/75 hover:bg-white/5"
-                )}
-              >
-                {i.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      <nav
+        id="mobile-navigation"
+        className="mobile-nav"
+        hidden={!open}
+        aria-label={t.header.menuToggle}
+      >
+        {nav.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={pathname === item.href ? "page" : undefined}
+            onClick={() => setOpen(false)}
+          >
+            {item.label}
+            <LuArrowUpRight aria-hidden />
+          </Link>
+        ))}
+        <a href={restaurant.phones[0].href} className="mobile-reservation">
+          {t.home.reservationsTitle} · {restaurant.phones[0].label}
+        </a>
+      </nav>
     </header>
   );
 }
